@@ -1,5 +1,7 @@
 package com.touchinghand.dto;
 
+import java.io.Serializable;
+
 enum Gender {
 	
 	MALE("M"), FEMALE("F"), OTHER("O");
@@ -37,16 +39,20 @@ enum Status {
 	
 }
 
-public class Client {
+public class Client implements Serializable{
 
 
-	private int clientId;
+	private Integer clientId;
 	
 	private String clientName;
 	
+	private String firstName;
+	
+	private String lastName;
+	
 	private String gender;
 	
-	private int age;
+	private Integer age;
 	
 	private String maritalStatus;
 	
@@ -60,7 +66,7 @@ public class Client {
 	
 	private String state;
 	
-	private int pin;
+	private Integer pin;
 	
 	private String country;
 	
@@ -76,11 +82,11 @@ public class Client {
 	
 	private String followupdate;
 
-	public int getClientId() {
+	public Integer getClientId() {
 		return clientId;
 	}
 
-	public void setClientId(int clientId) {
+	public void setClientId(Integer clientId) {
 		this.clientId = clientId;
 	}
 
@@ -94,11 +100,11 @@ public class Client {
 
 	
 
-	public int getAge() {
+	public Integer getAge() {
 		return age;
 	}
 
-	public void setAge(int age) {
+	public void setAge(Integer age) {
 		this.age = age;
 	}
 
@@ -150,11 +156,11 @@ public class Client {
 		this.state = state;
 	}
 
-	public int getPin() {
+	public Integer getPin() {
 		return pin;
 	}
 
-	public void setPin(int pin) {
+	public void setPin(Integer pin) {
 		this.pin = pin;
 	}
 
@@ -221,6 +227,22 @@ public class Client {
 
 	public void setStatus(String statusVal) {
 		this.status = statusVal;
+	}
+
+	public String getFirstName() {
+		return firstName;
+	}
+
+	public void setFirstName(String firstName) {
+		this.firstName = firstName;
+	}
+
+	public String getLastName() {
+		return lastName;
+	}
+
+	public void setLastName(String lastName) {
+		this.lastName = lastName;
 	}
 
 }

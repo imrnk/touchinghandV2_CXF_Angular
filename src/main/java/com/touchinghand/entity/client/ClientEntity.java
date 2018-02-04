@@ -7,6 +7,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -18,8 +19,14 @@ public class ClientEntity {
 	@Column(name="client_id")
 	private int clientId;
 	
-	@Column(name="name")
-	private String clientName;
+	@OneToOne(mappedBy="clientEntity")
+	private ClientMseEntity clientMse;
+	
+	@Column(name="first_name")
+	private String firstName;
+	
+	@Column(name="last_name")
+	private String lastName;
 	
 	@Column(name="gender")
 	private String gender;
@@ -76,14 +83,6 @@ public class ClientEntity {
 
 	public void setClientId(int clientId) {
 		this.clientId = clientId;
-	}
-
-	public String getClientName() {
-		return clientName;
-	}
-
-	public void setClientName(String clientName) {
-		this.clientName = clientName;
 	}
 
 	public String getGender() {
@@ -212,6 +211,22 @@ public class ClientEntity {
 
 	public void setFollowupDate(LocalDate followupDate) {
 		this.followupDate = followupDate;
+	}
+
+	public String getFirstName() {
+		return firstName;
+	}
+
+	public void setFirstName(String firstName) {
+		this.firstName = firstName;
+	}
+
+	public String getLastName() {
+		return lastName;
+	}
+
+	public void setLastName(String lastName) {
+		this.lastName = lastName;
 	}
 	
 	

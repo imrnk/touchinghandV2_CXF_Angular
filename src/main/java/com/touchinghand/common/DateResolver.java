@@ -8,7 +8,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class DateResolver {
 
-	private static String pattern= "YYYY-MM-DD";
+	private static String pattern= "yyyy-MM-dd";
 	
 	public DateResolver(){};
 	

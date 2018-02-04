@@ -7,6 +7,7 @@ import org.apache.cxf.common.util.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import com.touchinghand.common.CommonUtils;
 import com.touchinghand.common.DateResolver;
 import com.touchinghand.dto.Client;
 import com.touchinghand.entity.client.ClientEntity;
@@ -16,6 +17,9 @@ public class ClientMapper {
 
 	@Autowired
 	private DateResolver dateResolver;
+	
+	@Autowired
+	private CommonUtils util;
 
 	
 	public List<Client> fromEntities(List<ClientEntity> ces){
@@ -28,7 +32,7 @@ public class ClientMapper {
 			return null;
 		Client c = new Client();
 		c.setClientId(ce.getClientId());
-		c.setClientName(ce.getClientName());
+		c.setClientName(util.fullName(ce.getFirstName(), ce.getLastName()));
 		c.setAddress(ce.getAddress());
 		c.setAge(ce.getAge());
 		c.setStatus(ce.getStatus());
@@ -54,23 +58,53 @@ public class ClientMapper {
 			return null;
 		ClientEntity ce = new ClientEntity();
 		ce.setClientId(c.getClientId());
-		ce.setClientName(c.getClientName());
-		ce.setAddress(c.getAddress());
-		ce.setAge(c.getAge());
-		ce.setStatus(c.getStatus());
-		ce.setCity(c.getCity());
-		ce.setCountry(c.getCountry());
-		ce.setEducation(c.getEducation());
-		ce.setEmail(c.getEmail());
-		ce.setGender(c.getGender());
-		ce.setMaritalStatus(c.getMaritalStatus());
-		ce.setMobile(c.getMobile());
-		ce.setPin(c.getPin());
-		ce.setProfession(c.getProfession());
-		ce.setReference(c.getReference());
-		ce.setSecondPhone(c.getSecondPhone());
-		ce.setState(c.getState());
-		ce.setFollowupDate(dateResolver.toLocalDate(c.getFollowupdate()));
+		setClientEntityAttribs(c, ce);
+		return ce;
+	}
+
+	private void setClientEntityAttribs(Client c, ClientEntity ce) {
+		
+		if(util.changed(ce.getFirstName(), c.getFirstName()))
+			ce.setFirstName(c.getFirstName());
+		if(util.changed(ce.getLastName(), c.getLastName()))
+			ce.setLastName(c.getLastName());
+		if(util.changed(ce.getAddress(), c.getAddress()))
+			ce.setAddress(c.getAddress());
+		if(util.changed(ce.getAge(), c.getAge()))
+			ce.setAge(c.getAge());
+		if(util.changed(ce.getStatus(), c.getStatus()))
+			ce.setStatus(c.getStatus());
+		if(util.changed(ce.getCity(), c.getCity()))
+			ce.setCity(c.getCity());
+		if(util.changed(ce.getCountry(), c.getCountry()))
+			ce.setCountry(c.getCountry());
+		if(util.changed(ce.getEducation(), c.getEducation()))
+			ce.setEducation(c.getEducation());
+		if(util.changed(ce.getEmail(), c.getEmail()))
+			ce.setEmail(c.getEmail());
+		if(util.changed(ce.getGender(), c.getGender()))
+			ce.setGender(c.getGender());
+		if(util.changed(ce.getMaritalStatus(), c.getMaritalStatus()))
+			ce.setMaritalStatus(c.getMaritalStatus());
+		if(util.changed(ce.getMobile(), c.getMobile()))
+			ce.setMobile(c.getMobile());
+		if(util.changed(ce.getPin(), c.getPin()))
+			ce.setPin(c.getPin());
+		if(util.changed(ce.getProfession(), c.getProfession()))
+			ce.setProfession(c.getProfession());
+		if(util.changed(ce.getReference(), c.getReference()))
+			ce.setReference(c.getReference());
+		if(util.changed(ce.getSecondPhone(), c.getSecondPhone()))
+			ce.setSecondPhone(c.getSecondPhone());
+		if(util.changed(ce.getState(), c.getState()))
+			ce.setState(c.getState());
+		if(util.changed(dateResolver.toStringDate(ce.getFollowupDate()), c.getFollowupdate()))
+			ce.setFollowupDate(dateResolver.toLocalDate(c.getFollowupdate()));
+	}
+	
+	public ClientEntity toEntity(ClientEntity ce, Client c) {
+		if( ce == null || c == null) return null;
+		setClientEntityAttribs(c, ce);
 		return ce;
 	}
 
