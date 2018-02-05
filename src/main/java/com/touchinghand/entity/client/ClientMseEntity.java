@@ -393,6 +393,14 @@ public class ClientMseEntity {
 	public void setOtherJudgement(String otherJudgement) {
 		this.otherJudgement = otherJudgement;
 	}
+
+	public ClientEntity getClientEntity() {
+		return clientEntity;
+	}
+
+	public void setClientEntity(ClientEntity clientEntity) {
+		this.clientEntity = clientEntity;
+	}
 	
 }
 

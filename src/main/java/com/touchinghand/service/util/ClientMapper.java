@@ -20,6 +20,9 @@ public class ClientMapper {
 	
 	@Autowired
 	private CommonUtils util;
+	
+	@Autowired
+	private ClientMseMapper mseMapper;
 
 	
 	public List<Client> fromEntities(List<ClientEntity> ces){
@@ -49,6 +52,9 @@ public class ClientMapper {
 		c.setSecondPhone(ce.getSecondPhone());
 		c.setState(ce.getState());
 		c.setFollowupdate(dateResolver.toStringDate(ce.getFollowupDate()));
+		if(ce.getClientMse() != null) {
+			c.setClientMse(mseMapper.fromEntity(ce.getClientMse()));
+		}
 		return c;
 
 	}

@@ -2,45 +2,7 @@ package com.touchinghand.dto;
 
 import java.io.Serializable;
 
-enum Gender {
-	
-	MALE("M"), FEMALE("F"), OTHER("O");
-	
-	private String g;
-	Gender(String s) {
-		this.g = s;
-	}
-	
-	public String getValue() {
-		return g;
-	}
-	
-	public String toString() {
-		return g;
-	}
-	
-}
-
-enum Status {
-	ONGOING("Y"), CLOSED("C"), LEFT("L");
-	
-	private String s;
-	Status(String s){
-		this.s = s;
-	}
-	
-	public String getValue() {
-		return s;
-	}
-	
-	public String toString() {
-		return s;
-	}
-	
-}
-
 public class Client implements Serializable{
-
 
 	private Integer clientId;
 	
@@ -81,6 +43,8 @@ public class Client implements Serializable{
 	private String status;
 	
 	private String followupdate;
+	
+	private ClientMse clientMse;
 
 	public Integer getClientId() {
 		return clientId;
@@ -243,6 +207,14 @@ public class Client implements Serializable{
 
 	public void setLastName(String lastName) {
 		this.lastName = lastName;
+	}
+
+	public ClientMse getClientMse() {
+		return clientMse;
+	}
+
+	public void setClientMse(ClientMse clientMse) {
+		this.clientMse = clientMse;
 	}
 
 }

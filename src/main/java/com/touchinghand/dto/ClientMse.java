@@ -2,8 +2,6 @@ package com.touchinghand.dto;
 
 import java.io.Serializable;
 
-import com.touchinghand.entity.client.ClientEntity;
-
 public class ClientMse implements Serializable {
 	
 	private Integer clientMseId;

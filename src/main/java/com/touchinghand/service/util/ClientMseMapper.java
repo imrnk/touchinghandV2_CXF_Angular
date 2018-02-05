@@ -17,6 +17,9 @@ public class ClientMseMapper {
 	@Autowired
 	private CommonUtils utils;
 	
+	@Autowired
+	private ClientMapper clientMapper;
+	
 	
 	public List<ClientMseEntity> toEntities(List<ClientMse> cms){
 		if(CollectionUtils.isEmpty(cms)) return null;
@@ -138,7 +141,9 @@ public class ClientMseMapper {
 		cm.setSpeech(cme.getSpeech());
 		cm.setSuicidality(cme.getSuicidality());
 		cm.setThoughtComments(cme.getThoughtComments());
-		
+		if(cme.getClientEntity() != null) {
+			cm.setClient(clientMapper.fromEntity(cme.getClientEntity()));
+		}
 		return cm;
 				
 	}

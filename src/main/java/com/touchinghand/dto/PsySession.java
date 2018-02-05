@@ -1,0 +1,78 @@
+package com.touchinghand.dto;
+
+import java.time.LocalDateTime;
+
+public class PsySession {
+
+	private String sessionId;
+	
+	private String clientId;
+	
+	private Client client;
+	
+	private String sessionDate;
+	
+	private String followupDate;
+	
+	private LocalDateTime createdOn;
+	
+	private LocalDateTime updatedOn;
+
+	public String getSessionId() {
+		return sessionId;
+	}
+
+	public void setSessionId(String sessionId) {
+		this.sessionId = sessionId;
+	}
+
+	public String getClientId() {
+		return clientId;
+	}
+
+	public void setClientId(String clientId) {
+		this.clientId = clientId;
+	}
+
+	public Client getClient() {
+		return client;
+	}
+
+	public void setClient(Client client) {
+		this.client = client;
+	}
+
+	public String getSessionDate() {
+		return sessionDate;
+	}
+
+	public void setSessionDate(String sessionDate) {
+		this.sessionDate = sessionDate;
+	}
+
+	public String getFollowupDate() {
+		return followupDate;
+	}
+
+	public void setFollowupDate(String followupDate) {
+		this.followupDate = followupDate;
+	}
+
+	public LocalDateTime getCreatedOn() {
+		return createdOn;
+	}
+
+	public void setCreatedOn(LocalDateTime createdOn) {
+		this.createdOn = createdOn;
+	}
+
+	public LocalDateTime getUpdatedOn() {
+		return updatedOn;
+	}
+
+	public void setUpdatedOn(LocalDateTime updatedOn) {
+		this.updatedOn = updatedOn;
+	}
+	
+	
+}

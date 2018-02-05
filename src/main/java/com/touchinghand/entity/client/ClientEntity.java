@@ -228,6 +228,14 @@ public class ClientEntity {
 	public void setLastName(String lastName) {
 		this.lastName = lastName;
 	}
+
+	public ClientMseEntity getClientMse() {
+		return clientMse;
+	}
+
+	public void setClientMse(ClientMseEntity clientMse) {
+		this.clientMse = clientMse;
+	}
 	
 	
 }
