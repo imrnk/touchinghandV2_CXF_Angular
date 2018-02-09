@@ -64,9 +64,6 @@ public class TreatmentDataEntity {
 	@Column(name="formulation")
 	private String formulation;
 	
-	@Column(name="feedback")
-	private String feedback;
-	
 	@Column(name="created_on")
 	private LocalDateTime createdOn;
 	
@@ -184,14 +181,7 @@ public class TreatmentDataEntity {
 	public void setFormulation(String formulation) {
 		this.formulation = formulation;
 	}
-
-	public String getFeedback() {
-		return feedback;
-	}
-
-	public void setFeedback(String feedback) {
-		this.feedback = feedback;
-	}
+	
 
 	public LocalDateTime getCreatedOn() {
 		return createdOn;

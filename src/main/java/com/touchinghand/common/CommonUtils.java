@@ -1,11 +1,23 @@
 package com.touchinghand.common;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Component;
 
 @Component
 public class CommonUtils {
 
+	private static final Map<Integer, ReferenceDataType> intToTypeMap = new HashMap<Integer, ReferenceDataType>();
+	
+	static {
+	    for (ReferenceDataType type : ReferenceDataType.values()) {
+	        intToTypeMap.put(type.value, type);
+	    }
+	}
+	
+	
 	public String fromBool(boolean b) {
 		return b ? "Yes" : "No";
 	}
@@ -34,6 +46,12 @@ public class CommonUtils {
 		}
 		
 		return false;
+	}
+	
+
+	public ReferenceDataType fromInt(int i) {
+		ReferenceDataType type = intToTypeMap.get(Integer.valueOf(i));
+	    return type;
 	}
 	
 }

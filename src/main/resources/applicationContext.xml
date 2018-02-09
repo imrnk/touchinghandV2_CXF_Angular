@@ -22,6 +22,7 @@
 	<jaxrs:server id="endpoints">
 		<jaxrs:serviceBeans>
 			<bean class="com.touchinghand.endpoint.client.ClientResource" />
+			<bean class="com.touchinghand.endpoint.ReferenceResource" />
 		</jaxrs:serviceBeans>
 		<jaxrs:providers>
 			<ref bean="jsonProvider" />

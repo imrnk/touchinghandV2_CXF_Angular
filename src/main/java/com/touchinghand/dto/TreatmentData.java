@@ -35,7 +35,6 @@ private int treatmentId;
 	
 	private String formulation;
 	
-	private String feedback;
 	
 	private LocalDateTime createdOn;
 	
@@ -161,13 +160,6 @@ private int treatmentId;
 		this.formulation = formulation;
 	}
 
-	public String getFeedback() {
-		return feedback;
-	}
-
-	public void setFeedback(String feedback) {
-		this.feedback = feedback;
-	}
 
 	public LocalDateTime getCreatedOn() {
 		return createdOn;

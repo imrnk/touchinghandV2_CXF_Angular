@@ -14,6 +14,11 @@ public class PsySession {
 	
 	private String followupDate;
 	
+	private String impression;
+	
+	private String feedback;
+	
+	
 	private LocalDateTime createdOn;
 	
 	private LocalDateTime updatedOn;
@@ -72,6 +77,22 @@ public class PsySession {
 
 	public void setUpdatedOn(LocalDateTime updatedOn) {
 		this.updatedOn = updatedOn;
+	}
+
+	public String getImpression() {
+		return impression;
+	}
+
+	public void setImpression(String impression) {
+		this.impression = impression;
+	}
+
+	public String getFeedback() {
+		return feedback;
+	}
+
+	public void setFeedback(String feedback) {
+		this.feedback = feedback;
 	}
 	
 	
