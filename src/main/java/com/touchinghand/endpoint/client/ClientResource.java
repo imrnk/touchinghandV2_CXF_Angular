@@ -110,7 +110,7 @@ public class ClientResource {
 				ErrorResponse er = new ErrorResponse("422", "Could not create Client Information");
 				return Response.status(422).entity(er).build();
 			}
-			return Response.ok().build();
+			return Response.ok().entity(Boolean.TRUE).build();
 		} catch (RuntimeException e) {
 			ErrorResponse er = new ErrorResponse("422", "Could not create Client Information");
 			return Response.status(422).entity(er).build();
@@ -136,7 +136,7 @@ public class ClientResource {
 				ErrorResponse er = new ErrorResponse("422", "Could not update Client of id: " + clientId);
 				return Response.status(422).entity(er).build();
 			}
-			return Response.ok().build();
+			return Response.ok().entity(Boolean.TRUE).build();
 		} catch (RuntimeException e) {
 			if(e.getMessage() != null) {
 				ErrorResponse er = new ErrorResponse("422", e.getMessage());
@@ -167,7 +167,7 @@ public class ClientResource {
 				ErrorResponse er = new ErrorResponse("422", "Could not create Client MSE Information");
 				return Response.status(422).entity(er).build();
 			}
-			return Response.ok().build();
+			return Response.ok().entity(Boolean.TRUE).build();
 		} catch (RuntimeException e) {
 			ErrorResponse er = new ErrorResponse("422", "Could not create Client MSE Information");
 			return Response.status(422).entity(er).build();
@@ -194,7 +194,7 @@ public class ClientResource {
 				ErrorResponse er = new ErrorResponse("422", "Could not Update Client MSE Information");
 				return Response.status(422).entity(er).build();
 			}
-			return Response.ok().build();
+			return Response.ok().entity(Boolean.TRUE).build();
 		} catch (RuntimeException e) {
 			ErrorResponse er = new ErrorResponse("422", "Could not create Client MSE Information");
 			return Response.status(422).entity(er).build();

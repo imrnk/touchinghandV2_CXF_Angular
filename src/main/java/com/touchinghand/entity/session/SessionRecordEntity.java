@@ -1,4 +1,4 @@
-package com.touchinghand.entity.client;
+package com.touchinghand.entity.session;
 
 import java.time.LocalDateTime;
 
@@ -8,7 +8,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -23,8 +23,8 @@ public class SessionRecordEntity {
 	@Column(name="session_id")
 	private int sessionId;
 	
-	@ManyToOne
-	@JoinColumn(name="session_id", insertable=false, updatable=false)
+	@OneToOne(optional=false)
+	@JoinColumn(name="session_id", insertable=false, updatable=false, nullable=false)
 	private PsySessionEntity sessionEntity;
 	
 	

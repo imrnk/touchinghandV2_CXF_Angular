@@ -1,5 +1,7 @@
 package com.touchinghand.entity.client;
 
+import java.time.LocalDateTime;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -121,6 +123,12 @@ public class ClientMseEntity {
 	
 	@Column(name="judgement_other")
 	private String otherJudgement;
+	
+	@Column(name="created_on")
+	private LocalDateTime createdOn;
+	
+	@Column(name="updated_on")
+	private LocalDateTime updatedOn;
 
 	public int getClientMseId() {
 		return clientMseId;
@@ -400,6 +408,22 @@ public class ClientMseEntity {
 
 	public void setClientEntity(ClientEntity clientEntity) {
 		this.clientEntity = clientEntity;
+	}
+
+	public LocalDateTime getCreatedOn() {
+		return createdOn;
+	}
+
+	public void setCreatedOn(LocalDateTime createdOn) {
+		this.createdOn = createdOn;
+	}
+
+	public LocalDateTime getUpdatedOn() {
+		return updatedOn;
+	}
+
+	public void setUpdatedOn(LocalDateTime updatedOn) {
+		this.updatedOn = updatedOn;
 	}
 	
 }

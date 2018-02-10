@@ -5,8 +5,8 @@ import java.util.List;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
-import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
@@ -20,7 +20,7 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 
-@Path("/ref-data")
+@Path("/ref-data/{typeId}")
 @Api(value = "/ref-data", tags = "reference data")
 public class ReferenceResource {
 	
@@ -33,7 +33,7 @@ public class ReferenceResource {
 	@ApiOperation(value = "Returns list of reference data of passed type id", 
 	notes = "Returns list of reference data of passed type id", 
 	response = List.class)
-	public Response getReferenceDataOfType(@ApiParam @QueryParam("typeId") int typeId) {
+	public Response getReferenceDataOfType(@ApiParam @PathParam("typeId") int typeId) {
 		List<ReferenceData> refData = rdService.getReferenceDataOfType(typeId);
 		if(refData == null) {
 			ErrorResponse er = new ErrorResponse("422", "No reference data found");

@@ -23,6 +23,7 @@
 		<jaxrs:serviceBeans>
 			<bean class="com.touchinghand.endpoint.client.ClientResource" />
 			<bean class="com.touchinghand.endpoint.ReferenceResource" />
+			<bean class="com.touchinghand.endpoint.session.PsySessionResource" />
 		</jaxrs:serviceBeans>
 		<jaxrs:providers>
 			<ref bean="jsonProvider" />

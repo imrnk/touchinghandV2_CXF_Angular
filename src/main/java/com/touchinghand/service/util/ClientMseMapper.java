@@ -1,5 +1,6 @@
 package com.touchinghand.service.util;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -35,6 +36,7 @@ public class ClientMseMapper {
 		if(cm == null) return null;
 		ClientMseEntity cme = new ClientMseEntity();
 		setClientMseEntityAttribs(cm, cme);
+		cme.setCreatedOn(LocalDateTime.now());
 		return cme;
 	}
 

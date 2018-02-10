@@ -13,12 +13,12 @@ public class LocalDateTimeConverter implements AttributeConverter<LocalDateTime,
 	@Override
 	public Timestamp convertToDatabaseColumn(LocalDateTime ldt) {
 		DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-		return Timestamp.valueOf(ldt.format(dtf));
+		return ldt == null ? null : Timestamp.valueOf(ldt.format(dtf));
 	}
 
 	@Override
 	public LocalDateTime convertToEntityAttribute(Timestamp ts) {
-		return ts.toLocalDateTime();
+		return ts == null ? null : ts.toLocalDateTime();
 	}
 
 }

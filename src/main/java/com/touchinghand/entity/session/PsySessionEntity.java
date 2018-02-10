@@ -1,4 +1,4 @@
-package com.touchinghand.entity.client;
+package com.touchinghand.entity.session;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -10,7 +10,10 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
+
+import com.touchinghand.entity.client.ClientEntity;
 
 @Entity
 @Table(name="session")
@@ -20,6 +23,9 @@ public class PsySessionEntity {
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(name="session_id")
 	private int sessionId;
+	
+	@OneToOne(mappedBy="sessionEntity")
+	private SessionRecordEntity sessionRecordEntity;
 	
 	@Column(name="client_id")
 	private int clientId;
@@ -94,6 +100,14 @@ public class PsySessionEntity {
 
 	public void setUpdatedOn(LocalDateTime updatedOn) {
 		this.updatedOn = updatedOn;
+	}
+
+	public SessionRecordEntity getSessionRecordEntity() {
+		return sessionRecordEntity;
+	}
+
+	public void setSessionRecordEntity(SessionRecordEntity sessionRecordEntity) {
+		this.sessionRecordEntity = sessionRecordEntity;
 	}
 
 }

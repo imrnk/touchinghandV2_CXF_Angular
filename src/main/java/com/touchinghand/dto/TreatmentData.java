@@ -1,6 +1,5 @@
 package com.touchinghand.dto;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 public class TreatmentData {
@@ -15,7 +14,7 @@ private int treatmentId;
 	
 	private String mentalComp;
 	
-	private LocalDate onsetDate;
+	private String onsetDate;
 	
 	private String duration;
 	
@@ -80,11 +79,11 @@ private int treatmentId;
 		this.mentalComp = mentalComp;
 	}
 
-	public LocalDate getOnsetDate() {
+	public String getOnsetDate() {
 		return onsetDate;
 	}
 
-	public void setOnsetDate(LocalDate onsetDate) {
+	public void setOnsetDate(String onsetDate) {
 		this.onsetDate = onsetDate;
 	}
 

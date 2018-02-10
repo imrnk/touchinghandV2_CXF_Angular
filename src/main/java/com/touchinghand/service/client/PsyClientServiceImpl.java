@@ -1,5 +1,6 @@
 package com.touchinghand.service.client;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.logging.Logger;
 
@@ -176,6 +177,7 @@ public class PsyClientServiceImpl implements PsyClientService {
 		}
 		
 		ClientMseEntity updatedEntity = mseMapper.toEntity(cmseEntityDb, clientMse);
+		updatedEntity.setUpdatedOn(LocalDateTime.now());
 		EntityTransaction tx = em.getTransaction();
 		try {
 			tx.begin();

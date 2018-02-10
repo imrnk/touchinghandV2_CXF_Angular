@@ -1,4 +1,4 @@
-package com.touchinghand.entity.client;
+package com.touchinghand.entity.session;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;

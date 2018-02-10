@@ -65,6 +65,7 @@ public class ClientMapper {
 		ClientEntity ce = new ClientEntity();
 		ce.setClientId(c.getClientId());
 		setClientEntityAttribs(c, ce);
+		
 		return ce;
 	}
 
