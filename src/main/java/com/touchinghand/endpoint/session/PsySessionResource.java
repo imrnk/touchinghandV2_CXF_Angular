@@ -9,6 +9,7 @@ import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
@@ -135,6 +136,29 @@ public class PsySessionResource {
 			
 		} catch (RuntimeException e) {
 			ErrorResponse er = new ErrorResponse("422", "Could not update Treatment data");
+			return Response.status(422).entity(er).build();
+		}
+	}
+	
+	@GET
+	@Path("/{treatment-data}/{clientId}")
+	@Produces(MediaType.APPLICATION_JSON)
+	@Consumes(MediaType.APPLICATION_JSON)
+	@ApiOperation(value = "Retrieve Treatment data for a client", 
+	notes = "Retrieve Treatment data for a client", 
+	response = TreatmentData.class)
+	public Response getTreatmentData(@ApiParam @QueryParam("clientId") String clientId) {
+		
+		try {
+			TreatmentData treatmentData = psySessionService.getTreatmentData(Integer.valueOf(clientId));
+			if(treatmentData == null) {
+				ErrorResponse er = new ErrorResponse("422", "Could not retrieve Treatment data");
+				return Response.status(422).entity(er).build();
+			}
+			return Response.ok().entity(treatmentData).build();
+			
+		} catch (RuntimeException e) {
+			ErrorResponse er = new ErrorResponse("422", "Could not retrieve Treatment data");
 			return Response.status(422).entity(er).build();
 		}
 	}

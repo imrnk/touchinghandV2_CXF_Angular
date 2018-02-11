@@ -18,10 +18,10 @@ public class SessionRecordEntity {
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(name="record_id")
-	private int recordId;
+	private Integer recordId;
 	
 	@Column(name="session_id")
-	private int sessionId;
+	private Integer sessionId;
 	
 	@OneToOne(optional=false)
 	@JoinColumn(name="session_id", insertable=false, updatable=false, nullable=false)
@@ -40,19 +40,19 @@ public class SessionRecordEntity {
 	@Column(name="updated_on")
 	private LocalDateTime updatedOn;
 
-	public int getRecordId() {
+	public Integer getRecordId() {
 		return recordId;
 	}
 
-	public void setRecordId(int recordId) {
+	public void setRecordId(Integer recordId) {
 		this.recordId = recordId;
 	}
 
-	public int getSessionId() {
+	public Integer getSessionId() {
 		return sessionId;
 	}
 
-	public void setSessionId(int sessionId) {
+	public void setSessionId(Integer sessionId) {
 		this.sessionId = sessionId;
 	}
 

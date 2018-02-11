@@ -26,4 +26,6 @@ public interface PsySessionService {
 	
 	public boolean updateTreatmentData(TreatmentData s);
 	
+	public TreatmentData getTreatmentData(int clientId);
+	
 }

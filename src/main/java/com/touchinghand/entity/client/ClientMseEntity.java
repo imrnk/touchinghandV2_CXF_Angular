@@ -19,10 +19,10 @@ public class ClientMseEntity {
 	@Column(name="client_mse_id")
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	private int clientMseId;
+	private Integer clientMseId;
 	
 	@Column(name="client_id")
-	private int clientId;
+	private Integer clientId;
 	
 	@OneToOne
 	@JoinColumn(name="client_id", insertable=false, updatable=false)
@@ -134,15 +134,15 @@ public class ClientMseEntity {
 		return clientMseId;
 	}
 
-	public void setClientMseId(int clientMseId) {
+	public void setClientMseId(Integer clientMseId) {
 		this.clientMseId = clientMseId;
 	}
 
-	public int getClientId() {
+	public Integer getClientId() {
 		return clientId;
 	}
 
-	public void setClientId(int clientId) {
+	public void setClientId(Integer clientId) {
 		this.clientId = clientId;
 	}
 

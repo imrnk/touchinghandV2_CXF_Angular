@@ -4,9 +4,11 @@ import java.time.LocalDateTime;
 
 public class TreatmentData {
 
-private int treatmentId;
+	private int treatmentId;
 	
 	private String sessionId;
+	
+	private String clientId;
 	
 	private PsySession session;
 	
@@ -34,6 +36,7 @@ private int treatmentId;
 	
 	private String formulation;
 	
+	private String clientDocLink;
 	
 	private LocalDateTime createdOn;
 	
@@ -174,6 +177,22 @@ private int treatmentId;
 
 	public void setUpdatedOn(LocalDateTime updatedOn) {
 		this.updatedOn = updatedOn;
+	}
+
+	public String getClientDocLink() {
+		return clientDocLink;
+	}
+
+	public void setClientDocLink(String clientDocLink) {
+		this.clientDocLink = clientDocLink;
+	}
+
+	public String getClientId() {
+		return clientId;
+	}
+
+	public void setClientId(String clientId) {
+		this.clientId = clientId;
 	}
 	
 }

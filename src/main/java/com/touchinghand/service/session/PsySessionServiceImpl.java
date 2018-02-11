@@ -50,6 +50,24 @@ public class PsySessionServiceImpl implements PsySessionService {
 		return sessionMapper.fromEntities(results);
 	}
 	
+
+	@Override
+	public TreatmentData getTreatmentData(int clientId) {
+		LOGGER.info("Inside getTreatmentData ");
+		CriteriaBuilder cb = em.getCriteriaBuilder();
+		CriteriaQuery<TreatmentDataEntity> cq = cb.createQuery(TreatmentDataEntity.class);
+		Root<TreatmentDataEntity> from = cq.from(TreatmentDataEntity.class);
+		cq.where(cb.equal(from.get("clientId"), clientId));
+		
+		try {
+			TreatmentDataEntity tde = em.createQuery(cq).getSingleResult();
+			return sessionMapper.fromEntity(tde);
+		} catch (NoResultException e) {
+			return null;
+		}
+		
+	}
+	
 	@Override
 	public PsySession getSession(int sessionId) {
 		LOGGER.info("Inside getSession ");
@@ -189,7 +207,5 @@ public class PsySessionServiceImpl implements PsySessionService {
 		}
 		return true;
 	}
-
-	
 
 }

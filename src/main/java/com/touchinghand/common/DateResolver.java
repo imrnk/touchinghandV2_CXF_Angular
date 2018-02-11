@@ -21,7 +21,7 @@ public class DateResolver {
 	}
 	
 	public LocalDate toLocalDate(String sDate){
-		return LocalDate.parse(sDate, DateTimeFormatter.ofPattern(pattern));
+		return sDate == null ? null : LocalDate.parse(sDate, DateTimeFormatter.ofPattern(pattern));
 	}
 
 	

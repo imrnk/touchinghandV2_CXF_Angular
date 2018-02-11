@@ -105,9 +105,37 @@ public class PsySessionMapper {
 		tde.setPsyEvaluation(td.getPsyEvaluation());
 		if(td.getSessionId() != null && StringUtils.isNumeric(td.getSessionId()))
 			tde.setSessionId(Integer.valueOf(td.getSessionId()));
+		if(td.getClientId() != null && StringUtils.isNumeric(td.getClientId()))
+			tde.setClientId(Integer.valueOf(td.getClientId()));
 		tde.setTherapyApplied(td.getTherapyApplied());
-		
+		tde.setClientDocLink(td.getClientDocLink());
 		return tde;
+	}
+	
+	public TreatmentData fromEntity(TreatmentDataEntity tde) {
+		if(tde == null) return null;
+		
+		TreatmentData td = new TreatmentData();
+		
+		td.setCasehistory(tde.getCasehistory());
+		td.setClientDocLink(tde.getClientDocLink());
+		td.setClientId(tde.getClientId().toString());
+		td.setCreatedOn(tde.getCreatedOn());
+		td.setDegree(tde.getDegree().toString());
+		td.setDiagnosis(tde.getDiagnosis());
+		td.setDiffDiagnosis(tde.getDiffDiagnosis());
+		td.setDuration(tde.getDuration());
+		td.setFormulation(tde.getFormulation());
+		td.setLabTesting(tde.getLabTesting());
+		td.setMentalComp(tde.getMentalComp());
+		td.setOnsetDate(dateResolver.toStringDate(tde.getOnsetDate()));
+		td.setPhysicalComp(tde.getPhysicalComp());
+		td.setPsyEvaluation(tde.getPsyEvaluation());
+		td.setSessionId(tde.getSessionId().toString());
+		td.setTherapyApplied(tde.getTherapyApplied());
+		td.setTreatmentId(td.getTreatmentId());
+		td.setUpdatedOn(tde.getUpdatedOn());
+		return td;
 	}
 	
 	public TreatmentDataEntity updateEntity(TreatmentDataEntity tdse, TreatmentData dto) {
@@ -148,6 +176,9 @@ public class PsySessionMapper {
 		}
 		if(utils.changed(tdse.getTherapyApplied(), dto.getTherapyApplied())) {
 			tdse.setTherapyApplied(dto.getTherapyApplied());
+		}
+		if(utils.changed(tdse.getClientDocLink(), dto.getClientDocLink())) {
+			tdse.setClientDocLink(dto.getClientDocLink());
 		}
 		
 		tdse.setUpdatedOn(LocalDateTime.now());

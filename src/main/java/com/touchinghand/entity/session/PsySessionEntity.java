@@ -22,13 +22,13 @@ public class PsySessionEntity {
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(name="session_id")
-	private int sessionId;
+	private Integer sessionId;
 	
 	@OneToOne(mappedBy="sessionEntity")
 	private SessionRecordEntity sessionRecordEntity;
 	
 	@Column(name="client_id")
-	private int clientId;
+	private Integer clientId;
 	
 	@ManyToOne
 	@JoinColumn(name="client_id", insertable=false, updatable=false)
@@ -46,19 +46,19 @@ public class PsySessionEntity {
 	@Column(name="updated_on")
 	private LocalDateTime updatedOn;
 
-	public int getSessionId() {
+	public Integer getSessionId() {
 		return sessionId;
 	}
 
-	public void setSessionId(int sessionId) {
+	public void setSessionId(Integer sessionId) {
 		this.sessionId = sessionId;
 	}
 
-	public int getClientId() {
+	public Integer getClientId() {
 		return clientId;
 	}
 
-	public void setClientId(int clientId) {
+	public void setClientId(Integer clientId) {
 		this.clientId = clientId;
 	}
 

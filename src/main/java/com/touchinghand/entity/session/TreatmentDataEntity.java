@@ -12,6 +12,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
+import com.touchinghand.entity.client.ClientEntity;
+
 @Entity
 @Table(name="treatment_data")
 public class TreatmentDataEntity {
@@ -19,14 +21,21 @@ public class TreatmentDataEntity {
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(name="treatment_id")
-	private int treatmentId;
+	private Integer treatmentId;
 	
 	@Column(name="session_id")
-	private int sessionId;
+	private Integer sessionId;
+	
+	@Column(name="client_id")
+	private Integer clientId;
 	
 	@OneToOne
 	@JoinColumn(name="session_id", insertable=false, updatable=false)
 	private PsySessionEntity sessionEntity;
+	
+	@OneToOne
+	@JoinColumn(name="client_id", insertable=false, updatable=false)
+	private ClientEntity clientEntity;
 	
 	@Column(name="physical_comp")
 	private String physicalComp;
@@ -64,25 +73,28 @@ public class TreatmentDataEntity {
 	@Column(name="formulation")
 	private String formulation;
 	
+	@Column(name="client_doc_link")
+	private String clientDocLink;
+	
 	@Column(name="created_on")
 	private LocalDateTime createdOn;
 	
 	@Column(name="updated_on")
 	private LocalDateTime updatedOn;
 
-	public int getTreatmentId() {
+	public Integer getTreatmentId() {
 		return treatmentId;
 	}
 
-	public void setTreatmentId(int treatmentId) {
+	public void setTreatmentId(Integer treatmentId) {
 		this.treatmentId = treatmentId;
 	}
 
-	public int getSessionId() {
+	public Integer getSessionId() {
 		return sessionId;
 	}
 
-	public void setSessionId(int sessionId) {
+	public void setSessionId(Integer sessionId) {
 		this.sessionId = sessionId;
 	}
 
@@ -183,6 +195,14 @@ public class TreatmentDataEntity {
 	}
 	
 
+	public String getClientDocLink() {
+		return clientDocLink;
+	}
+
+	public void setClientDocLink(String clientDocLink) {
+		this.clientDocLink = clientDocLink;
+	}
+
 	public LocalDateTime getCreatedOn() {
 		return createdOn;
 	}
@@ -197,6 +217,22 @@ public class TreatmentDataEntity {
 
 	public void setUpdatedOn(LocalDateTime updatedOn) {
 		this.updatedOn = updatedOn;
+	}
+
+	public ClientEntity getClientEntity() {
+		return clientEntity;
+	}
+
+	public void setClientEntity(ClientEntity clientEntity) {
+		this.clientEntity = clientEntity;
+	}
+
+	public Integer getClientId() {
+		return clientId;
+	}
+
+	public void setClientId(Integer clientId) {
+		this.clientId = clientId;
 	}
 
 }

@@ -10,6 +10,8 @@ import javax.persistence.Id;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
+import com.touchinghand.entity.session.TreatmentDataEntity;
+
 @Entity
 @Table(name="client")
 public class ClientEntity {
@@ -17,10 +19,13 @@ public class ClientEntity {
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(name="client_id")
-	private int clientId;
+	private Integer clientId;
 	
 	@OneToOne(mappedBy="clientEntity")
 	private ClientMseEntity clientMse;
+	
+	@OneToOne(mappedBy="clientEntity")
+	private TreatmentDataEntity treatmentDataEntity;
 	
 	@Column(name="first_name")
 	private String firstName;
@@ -53,7 +58,7 @@ public class ClientEntity {
 	private String state;
 	
 	@Column(name="pin")
-	private int pin;
+	private Integer pin;
 	
 	@Column(name="country")
 	private String country;
@@ -77,11 +82,11 @@ public class ClientEntity {
 	@Column(name="followupdate")
 	private LocalDate followupDate;
 
-	public int getClientId() {
+	public Integer getClientId() {
 		return clientId;
 	}
 
-	public void setClientId(int clientId) {
+	public void setClientId(Integer clientId) {
 		this.clientId = clientId;
 	}
 
@@ -93,11 +98,11 @@ public class ClientEntity {
 		this.gender = gender;
 	}
 
-	public int getAge() {
+	public Integer getAge() {
 		return age;
 	}
 
-	public void setAge(int age) {
+	public void setAge(Integer age) {
 		this.age = age;
 	}
 
@@ -149,11 +154,11 @@ public class ClientEntity {
 		this.state = state;
 	}
 
-	public int getPin() {
+	public Integer getPin() {
 		return pin;
 	}
 
-	public void setPin(int pin) {
+	public void setPin(Integer pin) {
 		this.pin = pin;
 	}
 
@@ -235,6 +240,14 @@ public class ClientEntity {
 
 	public void setClientMse(ClientMseEntity clientMse) {
 		this.clientMse = clientMse;
+	}
+
+	public TreatmentDataEntity getTreatmentDataEntity() {
+		return treatmentDataEntity;
+	}
+
+	public void setTreatmentDataEntity(TreatmentDataEntity treatmentDataEntity) {
+		this.treatmentDataEntity = treatmentDataEntity;
 	}
 	
 	
