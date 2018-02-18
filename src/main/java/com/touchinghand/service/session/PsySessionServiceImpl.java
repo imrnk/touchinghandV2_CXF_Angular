@@ -1,6 +1,5 @@
 package com.touchinghand.service.session;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -13,9 +12,11 @@ import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import com.touchinghand.common.DateResolver;
 import com.touchinghand.dto.PsySession;
 import com.touchinghand.dto.TreatmentData;
 import com.touchinghand.entity.session.PsySessionEntity;
@@ -34,6 +35,9 @@ public class PsySessionServiceImpl implements PsySessionService {
 	
 	@Autowired
 	private PsySessionMapper sessionMapper;
+	
+	@Autowired
+	private DateResolver dateResolver;
 
 	@Override
 	public List<PsySession> getSessionOfClient(int clientId) {
@@ -85,15 +89,35 @@ public class PsySessionServiceImpl implements PsySessionService {
 	}
 
 	@Override
-	public List<PsySession> getSessionBetween(LocalDate start, LocalDate end) {
+	public List<PsySession> getSessionBetween(String start, String end) {
 		LOGGER.info("Inside getSessionBetween ");
+		if(StringUtils.isEmpty(start) || StringUtils.isEmpty(end)) throw new RuntimeException("Dates are required to search");
 		CriteriaBuilder cb = em.getCriteriaBuilder();
 		CriteriaQuery<PsySessionEntity> cq = cb.createQuery(PsySessionEntity.class);
-		Root<PsySessionEntity> from = cq.from(PsySessionEntity.class);
 		
-		cq.where(cb.between(from.get("sessionDate"), start, end));
+		Root<PsySessionEntity> from = cq.from(PsySessionEntity.class);
+		cq.where(cb.between(from.get("sessionDate"), dateResolver.toLocalDate(start), dateResolver.toLocalDate(end)));
 		List<PsySessionEntity> results = new ArrayList<>();
 		
+		results = em.createQuery(cq).getResultList();
+		results.forEach(r -> em.refresh(r));
+		
+		return sessionMapper.fromEntities(results);
+	}
+
+	
+	@Override
+	public List<PsySession> getSessionOfClientBetween(int clientId, String start, String end) {
+		LOGGER.info("Inside getSessionOfClientBetween ");
+		if(StringUtils.isEmpty(start) || StringUtils.isEmpty(end)) throw new RuntimeException("Dates are required to search");
+		CriteriaBuilder cb = em.getCriteriaBuilder();
+		CriteriaQuery<PsySessionEntity> cq = cb.createQuery(PsySessionEntity.class);
+		
+		Root<PsySessionEntity> from = cq.from(PsySessionEntity.class);
+		cq.where(cb.between(from.get("sessionDate"), dateResolver.toLocalDate(start), dateResolver.toLocalDate(end)));
+		List<PsySessionEntity> results = new ArrayList<>();
+		
+		cq.where(cb.equal(from.get("clientId"), clientId));
 		results = em.createQuery(cq).getResultList();
 		results.forEach(r -> em.refresh(r));
 		

@@ -1,6 +1,5 @@
 package com.touchinghand.service.session;
 
-import java.time.LocalDate;
 import java.util.List;
 
 import com.touchinghand.dto.PsySession;
@@ -12,7 +11,9 @@ public interface PsySessionService {
 	
 	public PsySession getSession(int sessionId);
 	
-	public List<PsySession> getSessionBetween(LocalDate start, LocalDate end);
+	public List<PsySession> getSessionBetween(String start, String end);
+	
+	public List<PsySession> getSessionOfClientBetween(int clientId, String start, String end);
 	
 	public List<PsySession> getAllSessionFeedbackOfClient(int clientId);
 	

@@ -206,7 +206,6 @@ public class PsyClientServiceImpl implements PsyClientService {
 			return null;
 		}
 		return mseMapper.fromEntity(result);
-	
 	}
 	
 
