@@ -1,9 +1,13 @@
 package com.touchinghand.dto;
 
+import java.io.Serializable;
 
+public class ReferenceData implements Serializable{
 
-public class ReferenceData {
-	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 4124749914938550188L;
 
 	private int referenceTypeId;
 	

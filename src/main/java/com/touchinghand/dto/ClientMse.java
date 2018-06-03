@@ -4,6 +4,10 @@ import java.io.Serializable;
 
 public class ClientMse implements Serializable {
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 5372358518008949341L;
 	private Integer clientMseId;
 	private Integer clientId;
 	private Client client;

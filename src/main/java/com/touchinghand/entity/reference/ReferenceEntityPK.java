@@ -8,6 +8,11 @@ import javax.persistence.Embeddable;
 @Embeddable
 public class ReferenceEntityPK implements Serializable{
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -3847830394536316896L;
+
 	@Column(name="reference_type_id")
 	private Integer referenceTypeId;
 	

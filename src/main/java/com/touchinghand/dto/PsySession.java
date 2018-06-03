@@ -1,8 +1,14 @@
 package com.touchinghand.dto;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
 
-public class PsySession {
+public class PsySession implements Serializable{
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -8378083496382765011L;
 
 	private String sessionId;
 	

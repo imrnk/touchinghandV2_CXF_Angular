@@ -35,7 +35,10 @@ public class ClientMapper {
 			return null;
 		Client c = new Client();
 		c.setClientId(ce.getClientId());
+		c.setFirstName(ce.getFirstName());
+		c.setLastName(ce.getLastName());
 		c.setClientName(util.fullName(ce.getFirstName(), ce.getLastName()));
+		
 		c.setAddress(ce.getAddress());
 		c.setAge(ce.getAge());
 		c.setStatus(ce.getStatus());

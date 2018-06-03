@@ -6,11 +6,12 @@ import java.util.List;
 import java.util.logging.Logger;
 
 import javax.persistence.EntityManager;
-import javax.persistence.EntityTransaction;
 import javax.persistence.NoResultException;
+import javax.persistence.PersistenceContext;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
+import javax.transaction.Transactional;
 
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,7 +31,7 @@ public class PsySessionServiceImpl implements PsySessionService {
 
 	private static final Logger LOGGER = Logger.getLogger(PsySessionServiceImpl.class.getName());
 
-	@Autowired
+	@PersistenceContext
 	private EntityManager em;
 	
 	@Autowired
@@ -40,6 +41,7 @@ public class PsySessionServiceImpl implements PsySessionService {
 	private DateResolver dateResolver;
 
 	@Override
+	@Transactional
 	public List<PsySession> getSessionOfClient(int clientId) {
 		LOGGER.info("Inside getSessionOfClient ");
 		CriteriaBuilder cb = em.getCriteriaBuilder();
@@ -56,6 +58,7 @@ public class PsySessionServiceImpl implements PsySessionService {
 	
 
 	@Override
+	@Transactional
 	public TreatmentData getTreatmentData(int clientId) {
 		LOGGER.info("Inside getTreatmentData ");
 		CriteriaBuilder cb = em.getCriteriaBuilder();
@@ -89,6 +92,7 @@ public class PsySessionServiceImpl implements PsySessionService {
 	}
 
 	@Override
+	@Transactional
 	public List<PsySession> getSessionBetween(String start, String end) {
 		LOGGER.info("Inside getSessionBetween ");
 		if(StringUtils.isEmpty(start) || StringUtils.isEmpty(end)) throw new RuntimeException("Dates are required to search");
@@ -107,6 +111,7 @@ public class PsySessionServiceImpl implements PsySessionService {
 
 	
 	@Override
+	@Transactional
 	public List<PsySession> getSessionOfClientBetween(int clientId, String start, String end) {
 		LOGGER.info("Inside getSessionOfClientBetween ");
 		if(StringUtils.isEmpty(start) || StringUtils.isEmpty(end)) throw new RuntimeException("Dates are required to search");
@@ -137,21 +142,14 @@ public class PsySessionServiceImpl implements PsySessionService {
 	}
 	
 	@Override
+	@Transactional
 	public boolean createSession(PsySession s) {
 		LOGGER.info("Inside createSession ");
 		if ( s == null) return false;
 		PsySessionEntity pse = sessionMapper.toEntity(s);
 		pse.setCreatedOn(LocalDateTime.now());
-		EntityTransaction tx = em.getTransaction();
-		try {
-			tx.begin();
-			em.persist(pse);
-			tx.commit();
-		} catch (RuntimeException e) {
-			tx.rollback();
-			throw new RuntimeException(e.getMessage());
-
-		}
+		//EntityTransaction tx = em.getTransaction();
+		em.persist(pse);
 		em.refresh(pse);
 		return createSessionRecord(s, pse);
 	}
@@ -159,76 +157,47 @@ public class PsySessionServiceImpl implements PsySessionService {
 	private boolean createSessionRecord(PsySession s, PsySessionEntity pse) {
 		LOGGER.info("Inside createSessionRecord ");
 		SessionRecordEntity sre = sessionMapper.toSessionRecordEntity(s, pse);
-		EntityTransaction tx = em.getTransaction();
-		try {
-			tx.begin();
-			em.persist(sre);
-			tx.commit();
-		} catch (RuntimeException e) {
-			tx.rollback();
-			throw new RuntimeException(e.getMessage());
-
-		}
+//		EntityTransaction tx = em.getTransaction();
+		em.persist(sre);
 		return true;
 		
 	}
 
 	@Override
+	@Transactional
 	public boolean updateSession(PsySession s) {
 		LOGGER.info("Inside updateSession ");
 		if ( s == null) return false;
 		PsySessionEntity psyEntityFromDB = em.find(PsySessionEntity.class, Integer.valueOf(s.getSessionId()));
 		
 		sessionMapper.updateEntity(psyEntityFromDB, s);
-		EntityTransaction tx = em.getTransaction();
-		try {
-			tx.begin();
-			em.merge(psyEntityFromDB);
-			tx.commit();
-		} catch (RuntimeException e) {
-			tx.rollback();
-			throw new RuntimeException(e.getMessage());
-
-		}
+	//	EntityTransaction tx = em.getTransaction();
+		em.merge(psyEntityFromDB);
 		return true;
 	}
 
 	@Override
+	@Transactional
 	public boolean createTreatmentData(TreatmentData s) {
 		LOGGER.info("Inside createTreatmentData ");
 		if ( s == null) return false;
 		TreatmentDataEntity tde = sessionMapper.toEntity(s);
 		tde.setCreatedOn(LocalDateTime.now());
-		EntityTransaction tx = em.getTransaction();
-		try {
-			tx.begin();
-			em.persist(tde);
-			tx.commit();
-		} catch (RuntimeException e) {
-			tx.rollback();
-			throw new RuntimeException(e.getMessage());
-
-		}
+	//	EntityTransaction tx = em.getTransaction();
+		em.persist(tde);
 		return true;
 	}
 
 	@Override
+	@Transactional
 	public boolean updateTreatmentData(TreatmentData s) {
 		LOGGER.info("Inside updateTreatmentData ");
 		if ( s == null) return false;
 		TreatmentDataEntity tdeDB = em.find(TreatmentDataEntity.class, s.getTreatmentId());
 		
 		sessionMapper.updateEntity(tdeDB, s);
-		EntityTransaction tx = em.getTransaction();
-		try {
-			tx.begin();
-			em.merge(tdeDB);
-			tx.commit();
-		} catch (RuntimeException e) {
-			tx.rollback();
-			throw new RuntimeException(e.getMessage());
-
-		}
+	//	EntityTransaction tx = em.getTransaction();
+		em.merge(tdeDB);
 		return true;
 	}
 

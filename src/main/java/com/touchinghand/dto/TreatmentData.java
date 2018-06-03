@@ -1,8 +1,14 @@
 package com.touchinghand.dto;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
 
-public class TreatmentData {
+public class TreatmentData implements Serializable{
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 7040316841254479991L;
 
 	private int treatmentId;
 	

@@ -5,11 +5,12 @@ import java.util.List;
 import java.util.logging.Logger;
 
 import javax.persistence.EntityManager;
-import javax.persistence.EntityTransaction;
 import javax.persistence.NoResultException;
+import javax.persistence.PersistenceContext;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
+import javax.transaction.Transactional;
 
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,7 +30,7 @@ public class PsyClientServiceImpl implements PsyClientService {
 
 	private static final Logger LOGGER = Logger.getLogger(PsyClientServiceImpl.class.getName());
 
-	@Autowired
+	@PersistenceContext
 	EntityManager em;
 
 	@Autowired
@@ -39,6 +40,7 @@ public class PsyClientServiceImpl implements PsyClientService {
 	private ClientMseMapper mseMapper;
 
 	@Override
+	@Transactional
 	public List<Client> findActiveClients() {
 		LOGGER.info("Inside findActiveClients ..");
 		CriteriaBuilder cb = em.getCriteriaBuilder();
@@ -53,6 +55,7 @@ public class PsyClientServiceImpl implements PsyClientService {
 
 
 	@Override
+	@Transactional
 	public List<Client> findAllClients() {
 		LOGGER.info("Inside findAllClients ..");
 		CriteriaBuilder cb = em.getCriteriaBuilder();
@@ -63,6 +66,7 @@ public class PsyClientServiceImpl implements PsyClientService {
 	}	
 
 	@Override
+	@Transactional
 	public Client findClientById(int id) {
 		LOGGER.info("Inside findClientById ..");
 		CriteriaBuilder cb = em.getCriteriaBuilder();
@@ -80,6 +84,7 @@ public class PsyClientServiceImpl implements PsyClientService {
 	}
 
 	@Override
+	@Transactional
 	public Client findClientByName(String fname, String lname) {
 		LOGGER.info("Inside findClientByName ..");
 		CriteriaBuilder cb = em.getCriteriaBuilder();
@@ -102,25 +107,19 @@ public class PsyClientServiceImpl implements PsyClientService {
 
 
 	@Override
+	@Transactional
 	public boolean addClient(Client client) {
 		LOGGER.info("Inside addClient ..");
 		
 		if (client == null) return false;
 		ClientEntity clientEntity = mapper.toEntity(client);
-		EntityTransaction tx = em.getTransaction();
-		try {
-			tx.begin();
-			em.persist(clientEntity);
-			tx.commit();
-		} catch (RuntimeException e) {
-			tx.rollback();
-			throw new RuntimeException(e.getMessage());
-
-		}
+		//EntityTransaction tx = em.getTransaction();
+		em.persist(clientEntity);
 		return true;
 	}
 
 	@Override
+	@Transactional
 	public boolean updateClient(int clientId, Client client) {
 		LOGGER.info("Inside updateClient ..");
 		
@@ -129,20 +128,14 @@ public class PsyClientServiceImpl implements PsyClientService {
 			throw new RuntimeException("Could not find client by id: " + clientId);
 		}
 		ClientEntity updatedEntity = mapper.toEntity(clientEntityFromDb, client);
-		EntityTransaction tx = em.getTransaction();
-		try {
-			tx.begin();
-			em.merge(updatedEntity);
-			tx.commit();
-		} catch (RuntimeException e) {
-			tx.rollback();
-			throw new RuntimeException(e.getMessage());
-		}
+		//EntityTransaction tx = em.getTransaction();
+		em.merge(updatedEntity);
 		return true;
 	}
 
 
 	@Override
+	@Transactional
 	public boolean addClientMse(int clientId, ClientMse clientMse) {
 		LOGGER.info("Inside addClientMse ..");
 		
@@ -152,22 +145,16 @@ public class PsyClientServiceImpl implements PsyClientService {
 		}
 		if(clientMse == null) return false;
 		ClientMseEntity mseEntity = mseMapper.toEntity(clientMse);
-		EntityTransaction tx = em.getTransaction();
+		//EntityTransaction tx = em.getTransaction();
 
-		try {
-			tx.begin();
-			em.persist(mseEntity);
-			tx.commit();
-		} catch (RuntimeException e) {
-			tx.rollback();
-			throw new RuntimeException(e.getMessage());
-		}
+		em.persist(mseEntity);
 		
 		return true;
 	}
 
 	
 	@Override
+	@Transactional
 	public boolean updateClientMse(int clientMseId, ClientMse clientMse) {
 		LOGGER.info("Inside updateClientMse ..");
 		
@@ -178,20 +165,14 @@ public class PsyClientServiceImpl implements PsyClientService {
 		
 		ClientMseEntity updatedEntity = mseMapper.toEntity(cmseEntityDb, clientMse);
 		updatedEntity.setUpdatedOn(LocalDateTime.now());
-		EntityTransaction tx = em.getTransaction();
-		try {
-			tx.begin();
-			em.merge(updatedEntity);
-			tx.commit();
-		} catch (RuntimeException e) {
-			tx.rollback();
-			throw new RuntimeException(e.getMessage());
-		}
+		//EntityTransaction tx = em.getTransaction();
+		em.merge(updatedEntity);
 		return true;
 	}
 	
 
 	@Override
+	@Transactional
 	public ClientMse getClientMse(int clientId) {
 		LOGGER.info("Inside getClientMse ..");
 		LOGGER.info("Inside findClientById ..");
