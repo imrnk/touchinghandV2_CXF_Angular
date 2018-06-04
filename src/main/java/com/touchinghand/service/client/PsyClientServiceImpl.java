@@ -9,6 +9,7 @@ import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 import javax.transaction.Transactional;
 
@@ -90,10 +91,16 @@ public class PsyClientServiceImpl implements PsyClientService {
 		CriteriaBuilder cb = em.getCriteriaBuilder();
 		CriteriaQuery<ClientEntity> cq = cb.createQuery(ClientEntity.class);
 		Root<ClientEntity> from = cq.from(ClientEntity.class);
-		if(StringUtils.isNotEmpty(fname))
-			cq.where(cb.equal(from.get("firstName"), fname));
-		if(StringUtils.isNotEmpty(lname))
-			cq.where(cb.equal(from.get("lastName"), lname));
+		Predicate fnamePred = cb.equal(from.get("firstName"), fname);
+		Predicate lnamePred = cb.equal(from.get("lastName"), lname);
+		if(StringUtils.isNotEmpty(fname) && StringUtils.isNotEmpty(lname)) {
+			cq.where(cb.and(fnamePred, lnamePred));
+		} else {
+			if(StringUtils.isNotEmpty(fname))
+				cq.where(fnamePred);
+			else if(StringUtils.isNotEmpty(lname))
+				cq.where(lnamePred);
+		}
 		ClientEntity result = null;
 		try {
 			result = em.createQuery(cq).getSingleResult();

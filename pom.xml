@@ -86,6 +86,17 @@
 					<target>${java.version}</target>
 				</configuration>
 			</plugin>
+			<plugin>
+			    <groupId>org.apache.tomcat.maven</groupId>
+			    <artifactId>tomcat7-maven-plugin</artifactId>
+			    <version>2.2</version>
+			    <configuration>
+				<url>http://localhost:8090/manager/text</url>
+				<server>TomcatServer</server>
+				<path>/onlinecounselling</path>
+			    </configuration>
+			</plugin>
 		</plugins>
+		<finalName>${project.artifactId}</finalName> 
 	</build>
 </project>
