@@ -18,11 +18,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.touchinghand.common.DateResolver;
+import com.touchinghand.dto.Client;
 import com.touchinghand.dto.PsySession;
 import com.touchinghand.dto.TreatmentData;
 import com.touchinghand.entity.session.PsySessionEntity;
 import com.touchinghand.entity.session.SessionRecordEntity;
 import com.touchinghand.entity.session.TreatmentDataEntity;
+import com.touchinghand.service.client.PsyClientService;
 import com.touchinghand.service.util.PsySessionMapper;
 
 @Component
@@ -39,6 +41,9 @@ public class PsySessionServiceImpl implements PsySessionService {
 	
 	@Autowired
 	private DateResolver dateResolver;
+	
+	@Autowired
+	private PsyClientService clientService;
 
 	@Override
 	@Transactional
@@ -151,6 +156,12 @@ public class PsySessionServiceImpl implements PsySessionService {
 		//EntityTransaction tx = em.getTransaction();
 		em.persist(pse);
 		em.refresh(pse);
+		//Update the follow up date in client entity too
+		if(StringUtils.isNotBlank(s.getFollowupDate())) {
+			Client updatedClient = new Client();
+			updatedClient.setFollowupdate(s.getFollowupDate());
+			clientService.updateClient(Integer.valueOf(s.getClientId()), updatedClient);
+		}
 		return createSessionRecord(s, pse);
 	}
 	
