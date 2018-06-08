@@ -35,7 +35,7 @@ public class PsySessionMapper {
 		
 		PsySession dto = new PsySession();
 		dto.setSessionId(String.valueOf(pse.getSessionId()));
-		dto.setClientId(String.valueOf(pse.getClientId()));
+		dto.setClientId(pse.getClientId());
 		dto.setSessionDate(dateResolver.toStringDate(pse.getSessionDate()));
 		dto.setImpression(pse.getSessionRecordEntity().getImpression());
 		dto.setFeedback(pse.getSessionRecordEntity().getFeedback());
@@ -48,8 +48,8 @@ public class PsySessionMapper {
 	public PsySessionEntity toEntity(PsySession ps) {
 		if(ps == null) return null;
 		PsySessionEntity pse = new PsySessionEntity();
-		if(ps.getClientId() != null && StringUtils.isNumeric(ps.getClientId()))
-			pse.setClientId(Integer.valueOf(ps.getClientId()));
+		if(ps.getClientId() != null )
+			pse.setClientId(ps.getClientId());
 		pse.setSessionDate(dateResolver.toLocalDate(ps.getSessionDate()));
 		pse.setFollowupDate(dateResolver.toLocalDate(ps.getFollowupDate()));
 		//pse.setSessionRecordEntity(toSessionRecordEntity(ps, pse));

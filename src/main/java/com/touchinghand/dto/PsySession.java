@@ -12,7 +12,7 @@ public class PsySession implements Serializable{
 
 	private String sessionId;
 	
-	private String clientId;
+	private Integer clientId;
 	
 	private Client client;
 	
@@ -37,11 +37,11 @@ public class PsySession implements Serializable{
 		this.sessionId = sessionId;
 	}
 
-	public String getClientId() {
+	public Integer getClientId() {
 		return clientId;
 	}
 
-	public void setClientId(String clientId) {
+	public void setClientId(int clientId) {
 		this.clientId = clientId;
 	}
 

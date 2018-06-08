@@ -9,7 +9,7 @@ public class Client implements Serializable{
 	 */
 	private static final long serialVersionUID = -1983385608091713600L;
 
-	private Integer clientId;
+	private int clientId;
 	
 	private String clientName;
 	
@@ -51,11 +51,11 @@ public class Client implements Serializable{
 	
 	private ClientMse clientMse;
 
-	public Integer getClientId() {
+	public int getClientId() {
 		return clientId;
 	}
 
-	public void setClientId(Integer clientId) {
+	public void setClientId(int clientId) {
 		this.clientId = clientId;
 	}
 
