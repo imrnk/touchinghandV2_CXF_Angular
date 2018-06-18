@@ -1,6 +1,8 @@
 package com.touchinghand.endpoint.client;
 
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
@@ -32,6 +34,7 @@ public class ClientResource {
 
 	@Autowired
 	private PsyClientService clientService;
+	private static final Logger LOGGER = Logger.getLogger(ClientResource.class.getName());
 
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
@@ -112,6 +115,7 @@ public class ClientResource {
 			}
 			return Response.ok().entity(Boolean.TRUE).build();
 		} catch (RuntimeException e) {
+			LOGGER.log(Level.SEVERE, e.getMessage());
 			ErrorResponse er = new ErrorResponse("422", "Could not create Client Information");
 			return Response.status(422).entity(er).build();
 		}
@@ -142,6 +146,7 @@ public class ClientResource {
 				ErrorResponse er = new ErrorResponse("422", e.getMessage());
 				return Response.status(422).entity(er).build();
 			}
+			LOGGER.log(Level.SEVERE, e.getMessage());
 			ErrorResponse er = new ErrorResponse("422", "Could not update Client of id: " + clientId);
 			return Response.status(422).entity(er).build();
 		}
@@ -169,6 +174,7 @@ public class ClientResource {
 			}
 			return Response.ok().entity(Boolean.TRUE).build();
 		} catch (RuntimeException e) {
+			LOGGER.log(Level.SEVERE, e.getMessage());
 			ErrorResponse er = new ErrorResponse("422", "Could not create Client MSE Information");
 			return Response.status(422).entity(er).build();
 		}
@@ -196,6 +202,7 @@ public class ClientResource {
 			}
 			return Response.ok().entity(Boolean.TRUE).build();
 		} catch (RuntimeException e) {
+			LOGGER.log(Level.SEVERE, e.getMessage());
 			ErrorResponse er = new ErrorResponse("422", "Could not create Client MSE Information");
 			return Response.status(422).entity(er).build();
 		}

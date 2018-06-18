@@ -2,6 +2,8 @@ package com.touchinghand.endpoint.session;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
@@ -36,6 +38,8 @@ public class PsySessionResource {
 	
 	@Autowired
 	private DateResolver dateResolver;
+	
+	private static final Logger LOGGER = Logger.getLogger(PsySessionResource.class.getName());
 	
 	@GET
 	@Path("/{clientId}")
@@ -123,6 +127,7 @@ public class PsySessionResource {
 			return Response.ok().entity(Boolean.TRUE).build();
 			
 		} catch (RuntimeException e) {
+			LOGGER.log(Level.SEVERE, e.getMessage());
 			ErrorResponse er = new ErrorResponse("422", "Could not create Session");
 			return Response.status(422).entity(er).build();
 		}
@@ -147,6 +152,7 @@ public class PsySessionResource {
 			return Response.ok().entity(Boolean.TRUE).build();
 			
 		} catch (RuntimeException e) {
+			LOGGER.log(Level.SEVERE, e.getMessage());
 			ErrorResponse er = new ErrorResponse("422", "Could not create Session");
 			return Response.status(422).entity(er).build();
 		}
@@ -170,6 +176,7 @@ public class PsySessionResource {
 			return Response.ok().entity(Boolean.TRUE).build();
 			
 		} catch (RuntimeException e) {
+			LOGGER.log(Level.SEVERE, e.getMessage());
 			ErrorResponse er = new ErrorResponse("422", "Could not create Treatment data");
 			return Response.status(422).entity(er).build();
 		}
@@ -193,6 +200,7 @@ public class PsySessionResource {
 			return Response.ok().entity(Boolean.TRUE).build();
 			
 		} catch (RuntimeException e) {
+			LOGGER.log(Level.SEVERE, e.getMessage());
 			ErrorResponse er = new ErrorResponse("422", "Could not update Treatment data");
 			return Response.status(422).entity(er).build();
 		}
