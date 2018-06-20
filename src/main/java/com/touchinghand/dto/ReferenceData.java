@@ -9,9 +9,9 @@ public class ReferenceData implements Serializable{
 	 */
 	private static final long serialVersionUID = 4124749914938550188L;
 
-	private int referenceTypeId;
+	private Integer referenceTypeId;
 	
-	private int referenceDataGroup;
+	private Integer referenceDataGroup;
 	
 	private String referenceDataType;
 	
@@ -19,11 +19,11 @@ public class ReferenceData implements Serializable{
 	
 	private String referenceValue;
 
-	public int getReferenceTypeId() {
+	public Integer getReferenceTypeId() {
 		return referenceTypeId;
 	}
 
-	public void setReferenceTypeId(int referenceTypeId) {
+	public void setReferenceTypeId(Integer referenceTypeId) {
 		this.referenceTypeId = referenceTypeId;
 	}
 
@@ -43,7 +43,7 @@ public class ReferenceData implements Serializable{
 		this.referenceValue = referenceValue;
 	}
 
-	public int getReferenceDataGroup() {
+	public Integer getReferenceDataGroup() {
 		return referenceDataGroup;
 	}
 

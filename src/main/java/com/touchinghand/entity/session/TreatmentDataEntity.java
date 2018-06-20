@@ -1,5 +1,6 @@
 package com.touchinghand.entity.session;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
@@ -16,8 +17,13 @@ import com.touchinghand.entity.client.ClientEntity;
 
 @Entity
 @Table(name="treatment_data")
-public class TreatmentDataEntity {
+public class TreatmentDataEntity implements Serializable{
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1806005437826125607L;
+
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(name="treatment_id")
@@ -33,7 +39,7 @@ public class TreatmentDataEntity {
 	@JoinColumn(name="session_id", insertable=false, updatable=false)
 	private PsySessionEntity sessionEntity;
 	
-	@OneToOne
+	@OneToOne(optional=true)
 	@JoinColumn(name="client_id", insertable=false, updatable=false)
 	private ClientEntity clientEntity;
 	
@@ -233,6 +239,43 @@ public class TreatmentDataEntity {
 
 	public void setClientId(Integer clientId) {
 		this.clientId = clientId;
+	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((clientId == null) ? 0 : clientId.hashCode());
+		result = prime * result + ((sessionId == null) ? 0 : sessionId.hashCode());
+		result = prime * result + ((treatmentId == null) ? 0 : treatmentId.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		TreatmentDataEntity other = (TreatmentDataEntity) obj;
+		if (clientId == null) {
+			if (other.clientId != null)
+				return false;
+		} else if (!clientId.equals(other.clientId))
+			return false;
+		if (sessionId == null) {
+			if (other.sessionId != null)
+				return false;
+		} else if (!sessionId.equals(other.sessionId))
+			return false;
+		if (treatmentId == null) {
+			if (other.treatmentId != null)
+				return false;
+		} else if (!treatmentId.equals(other.treatmentId))
+			return false;
+		return true;
 	}
 
 }

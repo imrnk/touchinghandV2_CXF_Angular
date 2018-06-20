@@ -1,5 +1,7 @@
 package com.touchinghand.entity.reference;
 
+import java.io.Serializable;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -7,7 +9,12 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name="reference_data_type")
-public class ReferenceDataTypeEntity {
+public class ReferenceDataTypeEntity implements Serializable{
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 6858749156306599312L;
 
 	@Id
 	@Column(name="reference_type_id")
@@ -41,6 +48,28 @@ public class ReferenceDataTypeEntity {
 
 	public void setReference_group(int reference_group) {
 		this.reference_group = reference_group;
+	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + reference_type_id;
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		ReferenceDataTypeEntity other = (ReferenceDataTypeEntity) obj;
+		if (reference_type_id != other.reference_type_id)
+			return false;
+		return true;
 	}
 	
 	

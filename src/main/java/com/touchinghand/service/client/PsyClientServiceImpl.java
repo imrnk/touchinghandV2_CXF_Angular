@@ -112,12 +112,10 @@ public class PsyClientServiceImpl implements PsyClientService {
 	}
 
 
-
 	@Override
 	@Transactional
 	public boolean addClient(Client client) {
 		LOGGER.info("Inside addClient ..");
-		
 		if (client == null) return false;
 		ClientEntity clientEntity = mapper.toEntity(client);
 		//EntityTransaction tx = em.getTransaction();

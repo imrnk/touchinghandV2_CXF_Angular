@@ -1,5 +1,6 @@
 package com.touchinghand.entity.client;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 
 import javax.persistence.Column;
@@ -14,7 +15,12 @@ import com.touchinghand.entity.session.TreatmentDataEntity;
 
 @Entity
 @Table(name="client")
-public class ClientEntity {
+public class ClientEntity implements Serializable{
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -6346415848512599757L;
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
@@ -248,6 +254,65 @@ public class ClientEntity {
 
 	public void setTreatmentDataEntity(TreatmentDataEntity treatmentDataEntity) {
 		this.treatmentDataEntity = treatmentDataEntity;
+	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((clientId == null) ? 0 : clientId.hashCode());
+		result = prime * result + ((email == null) ? 0 : email.hashCode());
+		result = prime * result + ((firstName == null) ? 0 : firstName.hashCode());
+		result = prime * result + ((lastName == null) ? 0 : lastName.hashCode());
+		result = prime * result + ((mobile == null) ? 0 : mobile.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		ClientEntity other = (ClientEntity) obj;
+		if (clientId == null) {
+			if (other.clientId != null)
+				return false;
+		} else if (!clientId.equals(other.clientId))
+			return false;
+		if (email == null) {
+			if (other.email != null)
+				return false;
+		} else if (!email.equals(other.email))
+			return false;
+		if (firstName == null) {
+			if (other.firstName != null)
+				return false;
+		} else if (!firstName.equals(other.firstName))
+			return false;
+		if (lastName == null) {
+			if (other.lastName != null)
+				return false;
+		} else if (!lastName.equals(other.lastName))
+			return false;
+		if (mobile == null) {
+			if (other.mobile != null)
+				return false;
+		} else if (!mobile.equals(other.mobile))
+			return false;
+		return true;
+	}
+
+	@Override
+	public String toString() {
+		return "ClientEntity [clientId=" + clientId + ", firstName=" + firstName + ", lastName=" + lastName
+				+ ", gender=" + gender + ", age=" + age + ", maritalStatus=" + maritalStatus + ", profession="
+				+ profession + ", education=" + education + ", address=" + address + ", city=" + city + ", state="
+				+ state + ", pin=" + pin + ", country=" + country + ", mobile=" + mobile + ", secondPhone="
+				+ secondPhone + ", email=" + email + ", reference=" + reference + ", status=" + status
+				+ ", followupDate=" + followupDate + "]";
 	}
 	
 	

@@ -24,7 +24,7 @@ public class ClientMseEntity {
 	@Column(name="client_id")
 	private Integer clientId;
 	
-	@OneToOne
+	@OneToOne(optional=true)
 	@JoinColumn(name="client_id", insertable=false, updatable=false)
 	private ClientEntity clientEntity;
 	

@@ -1,5 +1,6 @@
 package com.touchinghand.entity.session;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
@@ -17,8 +18,13 @@ import com.touchinghand.entity.client.ClientEntity;
 
 @Entity
 @Table(name="session")
-public class PsySessionEntity {
+public class PsySessionEntity implements Serializable{
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 7603513003878798582L;
+
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(name="session_id")
@@ -30,7 +36,7 @@ public class PsySessionEntity {
 	@Column(name="client_id")
 	private Integer clientId;
 	
-	@ManyToOne
+	@ManyToOne(optional=true)
 	@JoinColumn(name="client_id", insertable=false, updatable=false)
 	private ClientEntity clientEntity;
 	
@@ -108,6 +114,37 @@ public class PsySessionEntity {
 
 	public void setSessionRecordEntity(SessionRecordEntity sessionRecordEntity) {
 		this.sessionRecordEntity = sessionRecordEntity;
+	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((clientId == null) ? 0 : clientId.hashCode());
+		result = prime * result + ((sessionId == null) ? 0 : sessionId.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		PsySessionEntity other = (PsySessionEntity) obj;
+		if (clientId == null) {
+			if (other.clientId != null)
+				return false;
+		} else if (!clientId.equals(other.clientId))
+			return false;
+		if (sessionId == null) {
+			if (other.sessionId != null)
+				return false;
+		} else if (!sessionId.equals(other.sessionId))
+			return false;
+		return true;
 	}
 
 }

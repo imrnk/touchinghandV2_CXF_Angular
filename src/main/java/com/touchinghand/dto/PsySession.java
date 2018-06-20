@@ -24,7 +24,6 @@ public class PsySession implements Serializable{
 	
 	private String feedback;
 	
-	
 	private LocalDateTime createdOn;
 	
 	private LocalDateTime updatedOn;

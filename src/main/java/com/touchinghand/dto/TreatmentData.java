@@ -10,7 +10,7 @@ public class TreatmentData implements Serializable{
 	 */
 	private static final long serialVersionUID = 7040316841254479991L;
 
-	private int treatmentId;
+	private Integer treatmentId;
 	
 	private String sessionId;
 	
@@ -48,11 +48,11 @@ public class TreatmentData implements Serializable{
 	
 	private LocalDateTime updatedOn;
 
-	public int getTreatmentId() {
+	public Integer getTreatmentId() {
 		return treatmentId;
 	}
 
-	public void setTreatmentId(int treatmentId) {
+	public void setTreatmentId(Integer treatmentId) {
 		this.treatmentId = treatmentId;
 	}
 
