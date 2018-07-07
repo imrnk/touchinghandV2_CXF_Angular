@@ -49,8 +49,41 @@ public class ClientResource {
 			return Response.status(422).entity(er).build();
 		}
 		return Response.ok().entity(activeClients).build();
-
 	}
+	
+	@GET
+	@Path("/no-session")
+	@Produces(MediaType.APPLICATION_JSON)
+	@Consumes(MediaType.APPLICATION_JSON)
+	@ApiOperation(value = "Find all active clients who are yet to start session", 
+	notes = "Find all active clients who are yet to start session", 
+	response = List.class)
+	public Response activeClientsWithNoSession() {
+		List<Client> activeClients = clientService.findActiveClientsWithNoSession();
+		if (CollectionUtils.isEmpty(activeClients)) {
+			//ErrorResponse er = new ErrorResponse("422", "No active clients found");
+			return Response.noContent().build();
+		}
+		return Response.ok().entity(activeClients).build();
+	}
+	
+	
+	@GET
+	@Path("/crossed-followup")
+	@Produces(MediaType.APPLICATION_JSON)
+	@Consumes(MediaType.APPLICATION_JSON)
+	@ApiOperation(value = "Find all active clients who has crossed follow up date but no session yet", 
+	notes = "Find all active clients who has crossed follow up date but no session yet", 
+	response = List.class)
+	public Response activeClientsCrossedFollowup() {
+		List<Client> activeClients = clientService.findActiveClientsCrossedFollowupDate();
+		if (CollectionUtils.isEmpty(activeClients)) {
+			//ErrorResponse er = new ErrorResponse("422", "No active clients found");
+			return Response.noContent().build();
+		}
+		return Response.ok().entity(activeClients).build();
+	}
+	
 	
 	@GET
 	@Path("/search")

@@ -6,6 +6,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import javax.ws.rs.Consumes;
+import javax.ws.rs.DefaultValue;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
@@ -95,10 +96,10 @@ public class PsySessionResource {
 	@ApiOperation(value = "Find all upcoming sessions within next 7 days", 
 	notes = "Returns list of sessions within next 7 days", 
 	response = List.class)
-	public Response getUpcomingSession() {
+	public Response getUpcomingSession(@DefaultValue("1") @QueryParam("till") String noOfDays) {
 		
 		String startDate = dateResolver.toStringDate(LocalDate.now());
-		String endDate = dateResolver.toStringDate(LocalDate.now().plusDays(7));
+		String endDate = dateResolver.toStringDate(LocalDate.now().plusDays(Integer.valueOf(noOfDays)));
 		
 		List<PsySession> sessions = psySessionService.getSessionBetween(startDate, endDate);
 		

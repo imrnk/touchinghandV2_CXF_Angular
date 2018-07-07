@@ -10,6 +10,10 @@ public interface PsyClientService {
 	public List<Client> findAllClients();
 	
 	public List<Client> findActiveClients();
+
+	public List<Client> findActiveClientsWithNoSession();
+	
+	public List<Client> findActiveClientsCrossedFollowupDate();
 	
 	public Client findClientById(int id);
 	
@@ -24,4 +28,5 @@ public interface PsyClientService {
 	public ClientMse getClientMse(int clientId);
 	
 	public boolean updateClientMse(int clientMseId, ClientMse clientMse);
+	
 }

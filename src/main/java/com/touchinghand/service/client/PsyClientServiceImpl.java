@@ -1,8 +1,10 @@
 package com.touchinghand.service.client;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.logging.Logger;
+import java.util.stream.Collectors;
 
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
@@ -16,6 +18,7 @@ import javax.transaction.Transactional;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.util.CollectionUtils;
 import org.springframework.web.context.annotation.RequestScope;
 
 import com.touchinghand.dto.Client;
@@ -44,17 +47,56 @@ public class PsyClientServiceImpl implements PsyClientService {
 	@Transactional
 	public List<Client> findActiveClients() {
 		LOGGER.info("Inside findActiveClients ..");
+		List<ClientEntity> activeClients = activeClientEntities();
+
+		return mapper.fromEntities(activeClients);
+	}
+
+	private List<ClientEntity> activeClientEntities() {
+		
 		CriteriaBuilder cb = em.getCriteriaBuilder();
 		CriteriaQuery<ClientEntity> cq = cb.createQuery(ClientEntity.class);
 		Root<ClientEntity> from = cq.from(ClientEntity.class);
 		cq.where(cb.equal(from.get("status"), "Y"));
 		List<ClientEntity> activeClients = em.createQuery(cq).getResultList();
-
-		return mapper.fromEntities(activeClients);
+		return activeClients;
 	}
 	
+	@Override
+	@Transactional
+	public List<Client> findActiveClientsWithNoSession() {
 
+		List<ClientEntity> activeClientsWithNoSession = activeClientEntities()
+				.stream()
+				.filter(activeClientEntity -> CollectionUtils.isEmpty(activeClientEntity.getSessionEntities()))
+				.collect(Collectors.toList());
+		
+		return mapper.fromEntities(activeClientsWithNoSession);
+	
+	}
 
+	@Override
+	@Transactional
+	public List<Client> findActiveClientsCrossedFollowupDate() {
+		
+		//Client entity has a follow up date for which there is
+		//no session record with session date equal to the follow up date
+		//on the date of querying where now >= follow up date
+		LOGGER.info("Inside findActiveClientsCrossedFollowupDate ..");
+		LocalDate today = LocalDate.now();
+		
+		List<ClientEntity> clientEntities = activeClientEntities()
+		 .stream()
+			.filter(activeClientEntity -> !CollectionUtils.isEmpty(activeClientEntity.getSessionEntities())) // who has no session
+			.filter( ac -> (today.isEqual(ac.getFollowupDate()) || today.isAfter(ac.getFollowupDate()))) // who has on or before follow up date
+			.filter(filteredClient -> filteredClient.getSessionEntities().stream() 
+					.noneMatch(session -> session.getSessionDate().isEqual(filteredClient.getFollowupDate())) // no session date on follow up date 
+					).collect(Collectors.toList());
+		
+		return mapper.fromEntities(clientEntities);
+		
+	}
+	
 	@Override
 	@Transactional
 	public List<Client> findAllClients() {

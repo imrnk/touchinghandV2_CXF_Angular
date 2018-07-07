@@ -2,15 +2,19 @@ package com.touchinghand.entity.client;
 
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
+import com.touchinghand.entity.session.PsySessionEntity;
 import com.touchinghand.entity.session.TreatmentDataEntity;
 
 @Entity
@@ -32,6 +36,9 @@ public class ClientEntity implements Serializable{
 	
 	@OneToOne(mappedBy="clientEntity")
 	private TreatmentDataEntity treatmentDataEntity;
+	
+	@OneToMany(mappedBy="clientEntity", fetch=FetchType.LAZY)
+	private List<PsySessionEntity> sessionEntities;
 	
 	@Column(name="first_name")
 	private String firstName;
@@ -313,6 +320,18 @@ public class ClientEntity implements Serializable{
 				+ state + ", pin=" + pin + ", country=" + country + ", mobile=" + mobile + ", secondPhone="
 				+ secondPhone + ", email=" + email + ", reference=" + reference + ", status=" + status
 				+ ", followupDate=" + followupDate + "]";
+	}
+
+	public List<PsySessionEntity> getSessionEntities() {
+		return sessionEntities;
+	}
+
+	public void setSessionEntities(List<PsySessionEntity> sessionEntities) {
+		this.sessionEntities = sessionEntities;
+	}
+
+	public void setAge(int age) {
+		this.age = age;
 	}
 	
 	

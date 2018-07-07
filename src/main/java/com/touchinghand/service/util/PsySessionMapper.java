@@ -25,6 +25,9 @@ public class PsySessionMapper {
 	@Autowired
 	private CommonUtils utils;
 	
+	@Autowired
+	private ClientMapper clientMapper;
+	
 	
 	public List<PsySession> fromEntities(List<PsySessionEntity> pses){
 		return pses.stream().map(this::fromEntity).collect(Collectors.toList());
@@ -40,6 +43,8 @@ public class PsySessionMapper {
 		dto.setImpression(pse.getSessionRecordEntity().getImpression());
 		dto.setFeedback(pse.getSessionRecordEntity().getFeedback());
 		dto.setFollowupDate(dateResolver.toStringDate(pse.getFollowupDate()));
+		
+		dto.setClient(clientMapper.fromEntity(pse.getClientEntity()));
 		
 		return dto;
 		
