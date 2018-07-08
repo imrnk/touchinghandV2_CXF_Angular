@@ -20,13 +20,14 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 
-@Path("/ref-data/{typeId}")
+@Path("/ref-data")
 @Api(value = "/ref-data", tags = "reference data")
 public class ReferenceResource {
 	
 	@Autowired
 	private ReferenceDataService rdService;
 	
+	@Path(("/{typeId}"))
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
@@ -35,6 +36,22 @@ public class ReferenceResource {
 	response = List.class)
 	public Response getReferenceDataOfType(@ApiParam @PathParam("typeId") int typeId) {
 		List<ReferenceData> refData = rdService.getReferenceDataOfType(typeId);
+		if(refData == null) {
+			ErrorResponse er = new ErrorResponse("422", "No reference data found");
+			return Response.status(422).entity(er).build();
+		}
+		return Response.ok().entity(refData).build();
+	}
+	
+	@Path(("/by-group/{groupId}"))
+	@GET
+	@Produces(MediaType.APPLICATION_JSON)
+	@Consumes(MediaType.APPLICATION_JSON)
+	@ApiOperation(value = "Returns list of reference data of passed group id", 
+	notes = "Returns list of reference data of passed group id", 
+	response = List.class)
+	public Response getReferenceDataOfGroup(@ApiParam @PathParam("groupId") int groupId) {
+		List<ReferenceData> refData = rdService.getReferenceDataByGroupId(groupId);
 		if(refData == null) {
 			ErrorResponse er = new ErrorResponse("422", "No reference data found");
 			return Response.status(422).entity(er).build();

@@ -52,7 +52,8 @@ public class ReferenceDataServiceImpl implements ReferenceDataService {
 		try {
 			ReferenceDataTypeEntity rdeResult = em.createQuery(cqe).getSingleResult();
 			if(rdeResult != null) {
-				refData.forEach(r -> {r.setReferenceDataType(rdeResult.getReference_data_type()); r.setReferenceDataGroup(rdeResult.getReference_group());});
+				refData.forEach(r -> {r.setReferenceDataType(rdeResult.getReference_data_type()); 
+				r.setReferenceDataGroup(rdeResult.getReference_group());});
 			}
 		} catch (NoResultException e) {
 		}
@@ -60,5 +61,58 @@ public class ReferenceDataServiceImpl implements ReferenceDataService {
 		
 		return refData;
 	}
+
+	@Override
+	public List<ReferenceData> getReferenceDataByGroupId(int groupId) {
+
+		CriteriaBuilder cb = em.getCriteriaBuilder();
+		
+		CriteriaQuery<ReferenceDataTypeEntity> cqDataType = cb.createQuery(ReferenceDataTypeEntity.class);
+		Root<ReferenceDataTypeEntity> fromDataType = cqDataType.from(ReferenceDataTypeEntity.class);
+		
+		cqDataType.where(cb.equal(fromDataType.get("reference_group"), groupId));
+		List<ReferenceDataTypeEntity> refDataTypes = em.createQuery(cqDataType).getResultList();
+		
+		
+		CriteriaBuilder cb2 = em.getCriteriaBuilder();
+		CriteriaQuery<ReferenceDataEntity> cq = cb2.createQuery(ReferenceDataEntity.class);
+		Root<ReferenceDataEntity> from = cq.from(ReferenceDataEntity.class);
+		
+		cq.where(cb.isNotNull(from.get("referenceDataValue")));
+		List<ReferenceDataEntity> output = em.createQuery(cq).getResultList();
+		
+		
+		List<Integer> typeIds = refDataTypes.stream()
+				.map(ReferenceDataTypeEntity::getReference_type_id)
+				.collect(Collectors.toList());
+		
+		List<ReferenceDataEntity> results = output
+				.stream()
+				.filter(refData -> typeIds.stream()
+						.anyMatch(id -> id == refData.getPk().getReferenceTypeId()))
+				.collect(Collectors.toList());
+		
+		List<ReferenceData> refData = rdMapper.fromEntities(results);
+		
+		//Set the reference data type in reference data
+		List<ReferenceData> populatedRefData = refData
+		.stream()
+		.flatMap(rd -> 
+				refDataTypes
+				.stream()
+				.filter(rdt -> rdt.getReference_type_id() == rd.getReferenceTypeId())
+				.map(rdtf -> 
+						{
+						rd.setReferenceDataGroup(rdtf.getReference_group());
+						rd.setReferenceDataType(rdtf.getReference_data_type());
+						return rd;
+						}
+				
+				)).collect(Collectors.toList());
+		
+		return populatedRefData;
+	}
+	
+	
 
 }
