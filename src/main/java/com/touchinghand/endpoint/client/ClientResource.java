@@ -1,10 +1,12 @@
 package com.touchinghand.endpoint.client;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import javax.ws.rs.Consumes;
+import javax.ws.rs.DefaultValue;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
@@ -19,6 +21,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.apache.cxf.common.util.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import com.touchinghand.common.DateResolver;
 import com.touchinghand.common.ErrorResponse;
 import com.touchinghand.dto.Client;
 import com.touchinghand.dto.ClientMse;
@@ -35,6 +38,8 @@ public class ClientResource {
 	@Autowired
 	private PsyClientService clientService;
 	private static final Logger LOGGER = Logger.getLogger(ClientResource.class.getName());
+	@Autowired
+	private DateResolver dateResolver;
 
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
@@ -91,7 +96,7 @@ public class ClientResource {
 	@Consumes(MediaType.APPLICATION_JSON)
 	@ApiOperation(value = "Find a Client searched by name or id", 
 	notes = "Returns a Client searched by name or id", 
-	response = Client.class)
+	response = List.class)
 	public Response clientByNameOrId(@ApiParam @QueryParam("fname") String fname, 
 								 @ApiParam @QueryParam("lname") String lname,
 								@ApiParam @QueryParam("id") String id, 
@@ -106,7 +111,7 @@ public class ClientResource {
 			return Response.status(422).entity(er).build();
 		}
 		
-		Client result = clientService.findClientByName(fname, lname);
+		List<Client> result = clientService.findClientByName(fname, lname);
 		if (result == null) {
 			ErrorResponse er = new ErrorResponse("422", "No client found by name: " + fname + " " + lname);
 			return Response.status(422).entity(er).build();
@@ -262,6 +267,27 @@ public class ClientResource {
 		}
 		return Response.ok().entity(result).build();
 
+	}
+	
+	@GET
+	@Path("/upcoming")
+	@Produces(MediaType.APPLICATION_JSON)
+	@Consumes(MediaType.APPLICATION_JSON)
+	@ApiOperation(value = "Returns list of clients who has follow up date within next noOfDays", 
+	notes = "Returns list of clients who has follow up date within next noOfDays", 
+	response = List.class)
+	public Response getUpcomingSession(@DefaultValue("1") @QueryParam("till") String noOfDays) {
+		
+		String startDate = dateResolver.toStringDate(LocalDate.now());
+		String endDate = dateResolver.toStringDate(LocalDate.now().plusDays(Integer.valueOf(noOfDays)));
+		
+		List<Client> clients = clientService.getUpcomingSessions(startDate, endDate);
+		
+		if (clients == null) {
+			ErrorResponse er = new ErrorResponse("422", "No session found between " + startDate + " and " + endDate);
+			return Response.status(422).entity(er).build();
+		}
+		return Response.ok().entity(clients).build();
 	}
 	
 

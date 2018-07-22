@@ -1,12 +1,10 @@
 package com.touchinghand.endpoint.session;
 
-import java.time.LocalDate;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import javax.ws.rs.Consumes;
-import javax.ws.rs.DefaultValue;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
@@ -20,7 +18,6 @@ import javax.ws.rs.core.Response;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import com.touchinghand.common.DateResolver;
 import com.touchinghand.common.ErrorResponse;
 import com.touchinghand.dto.PsySession;
 import com.touchinghand.dto.TreatmentData;
@@ -37,8 +34,6 @@ public class PsySessionResource {
 	@Autowired
 	private PsySessionService psySessionService;
 	
-	@Autowired
-	private DateResolver dateResolver;
 	
 	private static final Logger LOGGER = Logger.getLogger(PsySessionResource.class.getName());
 	
@@ -81,27 +76,6 @@ public class PsySessionResource {
 		} else {
 			sessions = psySessionService.getSessionOfClientBetween(Integer.valueOf(clientId), startDate, endDate);
 		}
-		
-		if (sessions == null) {
-			ErrorResponse er = new ErrorResponse("422", "No session found between " + startDate + " and " + endDate);
-			return Response.status(422).entity(er).build();
-		}
-		return Response.ok().entity(sessions).build();
-	}
-	
-	@GET
-	@Path("/upcoming")
-	@Produces(MediaType.APPLICATION_JSON)
-	@Consumes(MediaType.APPLICATION_JSON)
-	@ApiOperation(value = "Find all upcoming sessions within next 7 days", 
-	notes = "Returns list of sessions within next 7 days", 
-	response = List.class)
-	public Response getUpcomingSession(@DefaultValue("1") @QueryParam("till") String noOfDays) {
-		
-		String startDate = dateResolver.toStringDate(LocalDate.now());
-		String endDate = dateResolver.toStringDate(LocalDate.now().plusDays(Integer.valueOf(noOfDays)));
-		
-		List<PsySession> sessions = psySessionService.getSessionBetween(startDate, endDate);
 		
 		if (sessions == null) {
 			ErrorResponse er = new ErrorResponse("422", "No session found between " + startDate + " and " + endDate);

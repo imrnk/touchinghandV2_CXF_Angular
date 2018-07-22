@@ -1,10 +1,13 @@
 package com.touchinghand.service.util;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Component;
 
+import com.touchinghand.dto.GroupedReferenceData;
 import com.touchinghand.dto.ReferenceData;
 import com.touchinghand.entity.reference.ReferenceDataEntity;
 
@@ -27,5 +30,17 @@ public class ReferenceDataMapper {
 		rd.setReferenceValue(rde.getReferenceDataValue());
 
 		return rd;
+	}
+	
+	public List<GroupedReferenceData> groupReferenceDataByTypeId(List<ReferenceData> refdata) {
+		Map<String, List<ReferenceData>> grouped =  refdata.stream().collect(Collectors.groupingBy(ReferenceData::getReferenceDataType));
+		
+		List<GroupedReferenceData> groupedData = new ArrayList<>();
+		
+		for(Map.Entry<String, List<ReferenceData>> entry : grouped.entrySet()) {
+			groupedData.add(new GroupedReferenceData(entry.getKey(), entry.getValue()));
+		}
+		
+		return groupedData;
 	}
 }

@@ -1,5 +1,6 @@
 package com.touchinghand.service;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -14,7 +15,9 @@ import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import com.touchinghand.dto.GroupedReferenceData;
 import com.touchinghand.dto.ReferenceData;
+import com.touchinghand.dto.ReferenceDataComparator;
 import com.touchinghand.entity.reference.ReferenceDataEntity;
 import com.touchinghand.entity.reference.ReferenceDataTypeEntity;
 import com.touchinghand.service.util.ReferenceDataMapper;
@@ -48,6 +51,7 @@ public class ReferenceDataServiceImpl implements ReferenceDataService {
 		cqe.where(cb.equal(fromRDE.get("reference_type_id"), typeId));
 		
 		List<ReferenceData> refData = rdMapper.fromEntities(results);
+		Collections.sort(refData, new ReferenceDataComparator());
 		
 		try {
 			ReferenceDataTypeEntity rdeResult = em.createQuery(cqe).getSingleResult();
@@ -63,7 +67,7 @@ public class ReferenceDataServiceImpl implements ReferenceDataService {
 	}
 
 	@Override
-	public List<ReferenceData> getReferenceDataByGroupId(int groupId) {
+	public List<GroupedReferenceData> getReferenceDataByGroupId(int groupId) {
 
 		CriteriaBuilder cb = em.getCriteriaBuilder();
 		
@@ -110,9 +114,8 @@ public class ReferenceDataServiceImpl implements ReferenceDataService {
 				
 				)).collect(Collectors.toList());
 		
-		return populatedRefData;
+		Collections.sort(populatedRefData, new ReferenceDataComparator());
+		populatedRefData.forEach(System.out::println);
+		return rdMapper.groupReferenceDataByTypeId(populatedRefData);
 	}
-	
-	
-
 }

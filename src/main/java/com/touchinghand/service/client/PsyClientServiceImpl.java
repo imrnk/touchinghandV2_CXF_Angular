@@ -2,6 +2,7 @@ package com.touchinghand.service.client;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
@@ -21,6 +22,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.util.CollectionUtils;
 import org.springframework.web.context.annotation.RequestScope;
 
+import com.touchinghand.common.DateResolver;
 import com.touchinghand.dto.Client;
 import com.touchinghand.dto.ClientMse;
 import com.touchinghand.entity.client.ClientEntity;
@@ -42,6 +44,9 @@ public class PsyClientServiceImpl implements PsyClientService {
 	
 	@Autowired
 	private ClientMseMapper mseMapper;
+	
+	@Autowired
+	private DateResolver dateResolver;
 
 	@Override
 	@Transactional
@@ -128,13 +133,14 @@ public class PsyClientServiceImpl implements PsyClientService {
 
 	@Override
 	@Transactional
-	public Client findClientByName(String fname, String lname) {
+	public List<Client> findClientByName(String fname, String lname) {
 		LOGGER.info("Inside findClientByName ..");
 		CriteriaBuilder cb = em.getCriteriaBuilder();
 		CriteriaQuery<ClientEntity> cq = cb.createQuery(ClientEntity.class);
 		Root<ClientEntity> from = cq.from(ClientEntity.class);
-		Predicate fnamePred = cb.equal(from.get("firstName"), fname);
-		Predicate lnamePred = cb.equal(from.get("lastName"), lname);
+		Predicate fnamePred = cb.like(from.get("firstName"), "%"+fname+"%"); //cb.equal(from.get("firstName"), fname);
+		Predicate lnamePred = cb.like(from.get("lastName"), "%"+lname+"%");
+		
 		if(StringUtils.isNotEmpty(fname) && StringUtils.isNotEmpty(lname)) {
 			cq.where(cb.and(fnamePred, lnamePred));
 		} else {
@@ -143,14 +149,10 @@ public class PsyClientServiceImpl implements PsyClientService {
 			else if(StringUtils.isNotEmpty(lname))
 				cq.where(lnamePred);
 		}
-		ClientEntity result = null;
-		try {
-			result = em.createQuery(cq).getSingleResult();
-		} catch (NoResultException e) {
-			return null;
-		}
+		List<ClientEntity> results = null;
+		results = em.createQuery(cq).getResultList();
 
-		return mapper.fromEntity(result);
+		return mapper.fromEntities(results);
 	}
 
 
@@ -236,5 +238,22 @@ public class PsyClientServiceImpl implements PsyClientService {
 		return mseMapper.fromEntity(result);
 	}
 	
+	@Override
+	@Transactional
+	public List<Client> getUpcomingSessions(String start, String end) {
+		LOGGER.info("Inside getUpcomingSessions ");
+		if(StringUtils.isEmpty(start) || StringUtils.isEmpty(end)) throw new RuntimeException("Dates are required to search");
+		CriteriaBuilder cb = em.getCriteriaBuilder();
+		CriteriaQuery<ClientEntity> cq = cb.createQuery(ClientEntity.class);
+		
+		Root<ClientEntity> from = cq.from(ClientEntity.class);
+		cq.where(cb.between(from.get("followupDate"), dateResolver.toLocalDate(start), dateResolver.toLocalDate(end)));
+		List<ClientEntity> results = new ArrayList<>();
+		
+		results = em.createQuery(cq).getResultList();
+		results.forEach(r -> em.refresh(r));
+		
+		return mapper.fromEntities(results);
+	}
 
 }

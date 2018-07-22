@@ -21,12 +21,14 @@ public interface PsyClientService {
 	
 	public boolean updateClient(int clientId, Client client);
 	
-	public Client findClientByName(String fname, String lname);
+	public List<Client> findClientByName(String fname, String lname);
 	
 	public boolean addClientMse(int clientId, ClientMse clientMse);
 	
 	public ClientMse getClientMse(int clientId);
 	
 	public boolean updateClientMse(int clientMseId, ClientMse clientMse);
+	
+	public List<Client> getUpcomingSessions(String start, String end);
 	
 }
