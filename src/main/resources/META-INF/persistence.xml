@@ -5,5 +5,9 @@
 	<persistence-unit name="OCSAPersistence"
 		transaction-type="RESOURCE_LOCAL">
 		<non-jta-data-source>java:comp/env/jdbc/ocsaDS</non-jta-data-source>
+		<properties>
+			 <property name="hibernate.dialect"
+                      value="org.hibernate.dialect.MySQL5Dialect"/>
+		</properties>
 	</persistence-unit>
 </persistence>

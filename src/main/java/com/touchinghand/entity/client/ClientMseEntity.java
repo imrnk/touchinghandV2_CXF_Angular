@@ -31,38 +31,38 @@ public class ClientMseEntity {
 	@Column(name="appearance")
 	private String appearance;
 	
-	@Column(name="other_appearance")
-	private String otherAppearance;
+	/*@Column(name="other_appearance")
+	private String otherAppearance;*/
 	
 	@Column(name="speech")
 	private String speech;
 	
-	@Column(name="other_speech")
-	private String otherSpeech;
+	/*@Column(name="other_speech")
+	private String otherSpeech;*/
 	
 	@Column(name="eye_contact")
 	private String eyeContact;
 	
-	@Column(name="other_eyecontact")
-	private String otherEyeContact;
+	/*@Column(name="other_eyecontact")
+	private String otherEyeContact;*/
 	
 	@Column(name="motor_activity")
 	private String motorActivity;
 	
-	@Column(name="other_motoractivity")
-	private String otherMotorActivity;
+	/*@Column(name="other_motoractivity")
+	private String otherMotorActivity;*/
 	
 	@Column(name="affect")
 	private String affect;
 	
-	@Column(name="other_affect")
-	private String otherAffect;
+	/*@Column(name="other_affect")
+	private String otherAffect;*/
 	
 	@Column(name="mood")
 	private String mood;
 	
-	@Column(name="other_mood")
-	private String otherMood;
+	/*@Column(name="other_mood")
+	private String otherMood;*/
 	
 	@Column(name="orientation_impairment")
 	private String orientationImpairment;
@@ -70,8 +70,8 @@ public class ClientMseEntity {
 	@Column(name="memory_impairment")
 	private String memoryImpairment;
 	
-	@Column(name="other_memory_impairment")
-	private String otherMemoryImpairment;
+	/*@Column(name="other_memory_impairment")
+	private String otherMemoryImpairment;*/
 	
 	@Column(name="attention")
 	private String attention;
@@ -97,8 +97,8 @@ public class ClientMseEntity {
 	@Column(name="delusions")
 	private String delusions;
 	
-	@Column(name="other_delusions")
-	private String otherDelusions;
+	/*@Column(name="other_delusions")
+	private String otherDelusions;*/
 	
 	@Column(name="thoughts_comments")
 	private String thoughtComments;
@@ -106,8 +106,8 @@ public class ClientMseEntity {
 	@Column(name="behavior")
 	private String behavior;
 	
-	@Column(name="other_behavior")
-	private String otherBehavior;
+	/*@Column(name="other_behavior")
+	private String otherBehavior;*/
 	
 	@Column(name="behavior_comments")
 	private String behaviorComments;
@@ -115,14 +115,14 @@ public class ClientMseEntity {
 	@Column(name="insight")
 	private String insight;
 	
-	@Column(name="other_insight")
-	private String otherInsight;
+	/*@Column(name="other_insight")
+	private String otherInsight;*/
 	
 	@Column(name="judgement")
 	private String judgement;
 	
-	@Column(name="judgement_other")
-	private String otherJudgement;
+	/*@Column(name="judgement_other")
+	private String otherJudgement;*/
 	
 	@Column(name="created_on")
 	private LocalDateTime createdOn;
@@ -154,28 +154,12 @@ public class ClientMseEntity {
 		this.appearance = appearance;
 	}
 
-	public String getOtherAppearance() {
-		return otherAppearance;
-	}
-
-	public void setOtherAppearance(String otherAppearance) {
-		this.otherAppearance = otherAppearance;
-	}
-
 	public String getSpeech() {
 		return speech;
 	}
 
 	public void setSpeech(String speech) {
 		this.speech = speech;
-	}
-
-	public String getOtherSpeech() {
-		return otherSpeech;
-	}
-
-	public void setOtherSpeech(String otherSpeech) {
-		this.otherSpeech = otherSpeech;
 	}
 
 	public String getEyeContact() {
@@ -186,28 +170,12 @@ public class ClientMseEntity {
 		this.eyeContact = eyeContact;
 	}
 
-	public String getOtherEyeContact() {
-		return otherEyeContact;
-	}
-
-	public void setOtherEyeContact(String otherEyeContact) {
-		this.otherEyeContact = otherEyeContact;
-	}
-
 	public String getMotorActivity() {
 		return motorActivity;
 	}
 
 	public void setMotorActivity(String motorActivity) {
 		this.motorActivity = motorActivity;
-	}
-
-	public String getOtherMotorActivity() {
-		return otherMotorActivity;
-	}
-
-	public void setOtherMotorActivity(String otherMotorActivity) {
-		this.otherMotorActivity = otherMotorActivity;
 	}
 
 	public String getAffect() {
@@ -218,28 +186,12 @@ public class ClientMseEntity {
 		this.affect = affect;
 	}
 
-	public String getOtherAffect() {
-		return otherAffect;
-	}
-
-	public void setOtherAffect(String otherAffect) {
-		this.otherAffect = otherAffect;
-	}
-
 	public String getMood() {
 		return mood;
 	}
 
 	public void setMood(String mood) {
 		this.mood = mood;
-	}
-
-	public String getOtherMood() {
-		return otherMood;
-	}
-
-	public void setOtherMood(String otherMood) {
-		this.otherMood = otherMood;
 	}
 
 	public String getOrientationImpairment() {
@@ -256,14 +208,6 @@ public class ClientMseEntity {
 
 	public void setMemoryImpairment(String memoryImpairment) {
 		this.memoryImpairment = memoryImpairment;
-	}
-
-	public String getOtherMemoryImpairment() {
-		return otherMemoryImpairment;
-	}
-
-	public void setOtherMemoryImpairment(String otherMemoryImpairment) {
-		this.otherMemoryImpairment = otherMemoryImpairment;
 	}
 
 	public String getAttention() {
@@ -330,14 +274,6 @@ public class ClientMseEntity {
 		this.delusions = delusions;
 	}
 
-	public String getOtherDelusions() {
-		return otherDelusions;
-	}
-
-	public void setOtherDelusions(String otherDelusions) {
-		this.otherDelusions = otherDelusions;
-	}
-
 	public String getThoughtComments() {
 		return thoughtComments;
 	}
@@ -352,14 +288,6 @@ public class ClientMseEntity {
 
 	public void setBehavior(String behavior) {
 		this.behavior = behavior;
-	}
-
-	public String getOtherBehavior() {
-		return otherBehavior;
-	}
-
-	public void setOtherBehavior(String otherBehavior) {
-		this.otherBehavior = otherBehavior;
 	}
 
 	public String getBehaviorComments() {
@@ -378,28 +306,12 @@ public class ClientMseEntity {
 		this.insight = insight;
 	}
 
-	public String getOtherInsight() {
-		return otherInsight;
-	}
-
-	public void setOtherInsight(String otherInsight) {
-		this.otherInsight = otherInsight;
-	}
-
 	public String getJudgement() {
 		return judgement;
 	}
 
 	public void setJudgement(String judgement) {
 		this.judgement = judgement;
-	}
-
-	public String getOtherJudgement() {
-		return otherJudgement;
-	}
-
-	public void setOtherJudgement(String otherJudgement) {
-		this.otherJudgement = otherJudgement;
 	}
 
 	public ClientEntity getClientEntity() {

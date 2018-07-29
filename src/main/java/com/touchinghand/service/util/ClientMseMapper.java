@@ -18,9 +18,6 @@ public class ClientMseMapper {
 	@Autowired
 	private CommonUtils utils;
 	
-	@Autowired
-	private ClientMapper clientMapper;
-	
 	
 	public List<ClientMseEntity> toEntities(List<ClientMse> cms){
 		if(CollectionUtils.isEmpty(cms)) return null;
@@ -75,30 +72,8 @@ public class ClientMseMapper {
 			cme.setMotorActivity(cm.getMotorActivity());
 		if(utils.changed(cme.getOrientationImpairment(), cm.getOrientationImpairment()))
 			cme.setOrientationImpairment(cm.getOrientationImpairment());
-		if(utils.changed(cme.getOtherAffect(), cm.getOtherAffect()))
-			cme.setOtherAffect(cm.getOtherAffect());
-		if(utils.changed(cme.getOtherAppearance(), cm.getOtherAppearance()))
-			cme.setOtherAppearance(cm.getOtherAppearance());
-		if(utils.changed(cme.getOtherBehavior(), cm.getOtherBehavior()))
-			cme.setOtherBehavior(cm.getOtherBehavior());
-		if(utils.changed(cme.getOtherDelusions(), cm.getOtherDelusions()))
-			cme.setOtherDelusions(cm.getOtherDelusions());
-		if(utils.changed(cme.getOtherEyeContact(), cm.getOtherEyeContact()))
-			cme.setOtherEyeContact(cm.getOtherEyeContact());
-		if(utils.changed(cme.getOtherInsight(), cm.getOtherInsight()))
-			cme.setOtherInsight(cm.getOtherInsight());
-		if(utils.changed(cme.getOtherJudgement(), cm.getOtherJudgement()))
-			cme.setOtherJudgement(cm.getOtherJudgement());
-		if(utils.changed(cme.getOtherMemoryImpairment(), cm.getOtherMemoryImpairment()))
-			cme.setOtherMemoryImpairment(cm.getOtherMemoryImpairment());
-		if(utils.changed(cme.getOtherMood(), cm.getOtherMood()))
-			cme.setOtherMood(cm.getOtherMood());
-		if(utils.changed(cme.getOtherMotorActivity(), cm.getOtherMotorActivity()))
-			cme.setOtherMotorActivity(cm.getOtherMotorActivity());
 		if(utils.changed(cme.getOtherPerceptions(), cm.getOtherPerceptions()))
 			cme.setOtherPerceptions(cm.getOtherPerceptions());
-		if(utils.changed(cme.getOtherSpeech(), cm.getOtherSpeech()))
-			cme.setOtherSpeech(cm.getOtherSpeech());
 		if(utils.changed(cme.getSpeech(), cm.getSpeech()))
 			cme.setSpeech(cm.getSpeech());
 		if(utils.changed(cme.getSuicidality(), cm.getSuicidality()))
@@ -128,18 +103,6 @@ public class ClientMseMapper {
 		cm.setMood(cme.getMood());
 		cm.setMotorActivity(cme.getMotorActivity());
 		cm.setOrientationImpairment(cme.getOrientationImpairment());
-		cm.setOtherAffect(cme.getOtherAffect());
-		cm.setOtherAppearance(cme.getOtherAppearance());
-		cm.setOtherBehavior(cme.getOtherBehavior());
-		cm.setOtherDelusions(cme.getOtherDelusions());
-		cm.setOtherEyeContact(cme.getOtherEyeContact());
-		cm.setOtherInsight(cme.getOtherInsight());
-		cm.setOtherJudgement(cme.getOtherJudgement());
-		cm.setOtherMemoryImpairment(cme.getOtherMemoryImpairment());
-		cm.setOtherMood(cme.getOtherMood());
-		cm.setOtherMotorActivity(cme.getOtherMotorActivity());
-		cm.setOtherPerceptions(cme.getOtherPerceptions());
-		cm.setOtherSpeech(cme.getOtherSpeech());
 		cm.setSpeech(cme.getSpeech());
 		cm.setSuicidality(cme.getSuicidality());
 		cm.setThoughtComments(cme.getThoughtComments());
