@@ -22,6 +22,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.util.CollectionUtils;
 import org.springframework.web.context.annotation.RequestScope;
 
+import com.touchinghand.common.CommonUtils;
 import com.touchinghand.common.DateResolver;
 import com.touchinghand.dto.Client;
 import com.touchinghand.dto.ClientMse;
@@ -89,14 +90,23 @@ public class PsyClientServiceImpl implements PsyClientService {
 		//on the date of querying where now >= follow up date
 		LOGGER.info("Inside findActiveClientsCrossedFollowupDate ..");
 		LocalDate today = LocalDate.now();
-		
-		List<ClientEntity> clientEntities = activeClientEntities()
+		//This will work if the client has atleast one session. 
+		//BUt in case of new client without any session we need not check 
+		//session date, rather should only check follow up date
+		//which is correct since now we are synching up the follow up date in client
+		// and session table
+		/*List<ClientEntity> clientEntities = activeClientEntities()
 		 .stream()
 			.filter(activeClientEntity -> !CollectionUtils.isEmpty(activeClientEntity.getSessionEntities())) // who has no session
 			.filter( ac -> (today.isEqual(ac.getFollowupDate()) || today.isAfter(ac.getFollowupDate()))) // who has on or before follow up date
 			.filter(filteredClient -> filteredClient.getSessionEntities().stream() 
 					.noneMatch(session -> session.getSessionDate().isEqual(filteredClient.getFollowupDate())) // no session date on follow up date 
-					).collect(Collectors.toList());
+					).collect(Collectors.toList());*/
+		
+		List<ClientEntity> clientEntities = activeClientEntities()
+				 .stream()
+					.filter( ac -> (today.isEqual(ac.getFollowupDate()) || today.isAfter(ac.getFollowupDate()))) // who has on or before follow up date
+					.collect(Collectors.toList());
 		
 		return mapper.fromEntities(clientEntities);
 		
@@ -193,10 +203,11 @@ public class PsyClientServiceImpl implements PsyClientService {
 			throw new RuntimeException("Could not find client by id: " + clientId);
 		}
 		if(clientMse == null) return false;
+		LOGGER.info(CommonUtils.toJson(clientMse));
 		ClientMseEntity mseEntity = mseMapper.toEntity(clientMse);
 		//EntityTransaction tx = em.getTransaction();
 
-		em.persist(mseEntity);
+		//TODO: em.persist(mseEntity);
 		
 		return true;
 	}

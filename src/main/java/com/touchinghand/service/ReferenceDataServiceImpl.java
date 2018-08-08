@@ -115,7 +115,6 @@ public class ReferenceDataServiceImpl implements ReferenceDataService {
 				)).collect(Collectors.toList());
 		
 		Collections.sort(populatedRefData, new ReferenceDataComparator());
-		populatedRefData.forEach(System.out::println);
 		return rdMapper.groupReferenceDataByTypeId(populatedRefData);
 	}
 }

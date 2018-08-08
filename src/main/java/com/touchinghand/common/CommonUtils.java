@@ -6,6 +6,9 @@ import java.util.Map;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Component;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 @Component
 public class CommonUtils {
 
@@ -54,4 +57,15 @@ public class CommonUtils {
 	    return type;
 	}
 	
+	
+	public static String toJson(Object o) {
+		try {
+			ObjectMapper mapper = new ObjectMapper();
+			return mapper.writeValueAsString(o);
+		} catch (JsonProcessingException e) {
+		}
+		finally {
+			return "";
+		}
+	}
 }
