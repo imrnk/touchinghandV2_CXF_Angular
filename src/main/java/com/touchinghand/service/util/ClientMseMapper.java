@@ -9,11 +9,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.touchinghand.common.CommonUtils;
+import com.touchinghand.common.DateResolver;
 import com.touchinghand.dto.ClientMse;
 import com.touchinghand.entity.client.ClientMseEntity;
 
 @Component
 public class ClientMseMapper {
+	
+	@Autowired
+	private DateResolver dateResolver;
 	
 	@Autowired
 	private CommonUtils utils;
@@ -106,6 +110,7 @@ public class ClientMseMapper {
 		cm.setSpeech(cme.getSpeech());
 		cm.setSuicidality(cme.getSuicidality());
 		cm.setThoughtComments(cme.getThoughtComments());
+		cm.setCreationDate(dateResolver.toStringDate(cme.getCreatedOn()));
 		/*if(cme.getClientEntity() != null) {
 			cm.setClient(clientMapper.fromEntity(cme.getClientEntity()));
 		}*/

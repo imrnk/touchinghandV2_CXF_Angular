@@ -43,6 +43,7 @@ public class ClientMse implements Serializable {
 	private String otherInsight;
 	private String judgement;
 	private String otherJudgement;
+	private String creationDate;
 	
 	public Integer getClientMseId() {
 		return clientMseId;
@@ -253,5 +254,11 @@ public class ClientMse implements Serializable {
 	}
 	public void setClient(Client client) {
 		this.client = client;
+	}
+	public String getCreationDate() {
+		return creationDate;
+	}
+	public void setCreationDate(String creationDate) {
+		this.creationDate = creationDate;
 	}
 }

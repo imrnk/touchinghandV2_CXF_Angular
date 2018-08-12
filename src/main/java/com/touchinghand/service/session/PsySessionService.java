@@ -19,7 +19,7 @@ public interface PsySessionService {
 	
 	public List<PsySession> getAllSessionImpressionsOfClient(int clientId);
 	
-	public boolean createSession(PsySession s);
+	public Integer createSession(PsySession s);
 	
 	public boolean updateSession(PsySession s);
 	

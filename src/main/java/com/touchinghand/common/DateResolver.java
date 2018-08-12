@@ -1,6 +1,7 @@
 package com.touchinghand.common;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
 import org.springframework.stereotype.Component;
@@ -22,6 +23,10 @@ public class DateResolver {
 	
 	public LocalDate toLocalDate(String sDate){
 		return sDate == null ? null : LocalDate.parse(sDate, DateTimeFormatter.ofPattern(pattern));
+	}
+	
+	public String toStringDate(LocalDateTime ldt) {
+		return ldt == null ? "" : ldt.toLocalDate().toString();
 	}
 
 	

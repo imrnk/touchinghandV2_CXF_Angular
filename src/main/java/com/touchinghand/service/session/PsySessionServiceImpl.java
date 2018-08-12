@@ -148,9 +148,9 @@ public class PsySessionServiceImpl implements PsySessionService {
 	
 	@Override
 	@Transactional
-	public boolean createSession(PsySession s) {
+	public Integer createSession(PsySession s) {
 		LOGGER.info("Inside createSession ");
-		if ( s == null) return false;
+		if ( s == null) return null;
 		PsySessionEntity pse = sessionMapper.toEntity(s);
 		pse.setCreatedOn(LocalDateTime.now());
 		//EntityTransaction tx = em.getTransaction();
@@ -162,7 +162,7 @@ public class PsySessionServiceImpl implements PsySessionService {
 			updatedClient.setFollowupdate(s.getFollowupDate());
 			clientService.updateClient(Integer.valueOf(s.getClientId()), updatedClient);
 		}
-		return createSessionRecord(s, pse);
+		return createSessionRecord(s, pse)? pse.getSessionId() : null;
 	}
 	
 	private boolean createSessionRecord(PsySession s, PsySessionEntity pse) {

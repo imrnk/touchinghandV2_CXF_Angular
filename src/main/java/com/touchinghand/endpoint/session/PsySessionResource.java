@@ -38,6 +38,23 @@ public class PsySessionResource {
 	private static final Logger LOGGER = Logger.getLogger(PsySessionResource.class.getName());
 	
 	@GET
+	@Produces(MediaType.APPLICATION_JSON)
+	@Consumes(MediaType.APPLICATION_JSON)
+	@ApiOperation(value = "Finds a Session by id", 
+	notes = "Finds a Session by id", 
+	response = PsySession.class)
+	public Response findSessionById(@ApiParam @QueryParam("sessionId") String sessionId) {
+		
+		PsySession session = psySessionService.getSession(Integer.valueOf(sessionId));
+		if (session == null) {
+			ErrorResponse er = new ErrorResponse("422", "No session found with session id: " + sessionId);
+			return Response.status(422).entity(er).build();
+		}
+		return Response.ok().entity(session).build();
+	}
+	
+	
+	@GET
 	@Path("/{clientId}")
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
@@ -53,6 +70,7 @@ public class PsySessionResource {
 		}
 		return Response.ok().entity(sessions).build();
 	}
+	
 	
 	@GET
 	@Path("/search")
@@ -88,18 +106,18 @@ public class PsySessionResource {
 	@POST
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
-	@ApiOperation(value = "Create a psy session for a client", 
+	@ApiOperation(value = "Create a psy session for a client and return the created session Id", 
 	notes = "Create a psy session for a client", 
-	response = Boolean.class)
+	response = Integer.class)
 	public Response createSession(PsySession session) {
 		
 		try {
-			boolean success = psySessionService.createSession(session);
-			if(!success) {
+			Integer sessionId = psySessionService.createSession(session);
+			if(sessionId == null) {
 				ErrorResponse er = new ErrorResponse("422", "Could not create Session");
 				return Response.status(422).entity(er).build();
 			}
-			return Response.ok().entity(Boolean.TRUE).build();
+			return Response.ok().entity(sessionId).build();
 			
 		} catch (RuntimeException e) {
 			LOGGER.log(Level.SEVERE, e.getMessage());

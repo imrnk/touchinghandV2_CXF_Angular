@@ -205,9 +205,7 @@ public class PsyClientServiceImpl implements PsyClientService {
 		if(clientMse == null) return false;
 		LOGGER.info(CommonUtils.toJson(clientMse));
 		ClientMseEntity mseEntity = mseMapper.toEntity(clientMse);
-		//EntityTransaction tx = em.getTransaction();
-
-		//TODO: em.persist(mseEntity);
+		em.persist(mseEntity);
 		
 		return true;
 	}
