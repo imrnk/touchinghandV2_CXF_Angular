@@ -64,7 +64,7 @@ public class PsySessionServiceImpl implements PsySessionService {
 
 	@Override
 	@Transactional
-	public TreatmentData getTreatmentData(int clientId) {
+	public List<TreatmentData> getTreatmentData(int clientId) {
 		LOGGER.info("Inside getTreatmentData ");
 		CriteriaBuilder cb = em.getCriteriaBuilder();
 		CriteriaQuery<TreatmentDataEntity> cq = cb.createQuery(TreatmentDataEntity.class);
@@ -72,13 +72,30 @@ public class PsySessionServiceImpl implements PsySessionService {
 		cq.where(cb.equal(from.get("clientId"), clientId));
 		
 		try {
-			TreatmentDataEntity tde = em.createQuery(cq).getSingleResult();
-			return sessionMapper.fromEntity(tde);
+			List<TreatmentDataEntity> tdes = em.createQuery(cq).getResultList();
+			return sessionMapper.fromTreatmentDataEntities(tdes);
 		} catch (NoResultException e) {
 			return null;
 		}
-		
 	}
+	
+	@Override
+	public TreatmentData getTreatmentDataForSession(int sessionId) {
+		LOGGER.info("Inside getTreatmentDataForSession ");
+		CriteriaBuilder cb = em.getCriteriaBuilder();
+		CriteriaQuery<TreatmentDataEntity> cq = cb.createQuery(TreatmentDataEntity.class);
+		Root<TreatmentDataEntity> from = cq.from(TreatmentDataEntity.class);
+		cq.where(cb.equal(from.get("sessionId"), sessionId));
+		
+		try {
+			TreatmentDataEntity tde = em.createQuery(cq).getSingleResult();
+			return sessionMapper.fromTreatmentDataEntity(tde);
+		} catch (NoResultException e) {
+			return null;
+		}
+	}
+
+	
 	
 	@Override
 	public PsySession getSession(int sessionId) {
@@ -211,5 +228,5 @@ public class PsySessionServiceImpl implements PsySessionService {
 		em.merge(tdeDB);
 		return true;
 	}
-
+	
 }

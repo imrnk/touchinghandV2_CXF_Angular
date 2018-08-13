@@ -30,7 +30,7 @@ public class TreatmentDataEntity implements Serializable{
 	private Integer treatmentId;
 	
 	@Column(name="session_id")
-	private Integer sessionId;
+	private Integer sessionId; 
 	
 	@Column(name="client_id")
 	private Integer clientId;

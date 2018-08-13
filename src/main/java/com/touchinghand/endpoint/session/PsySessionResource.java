@@ -38,7 +38,7 @@ public class PsySessionResource {
 	private static final Logger LOGGER = Logger.getLogger(PsySessionResource.class.getName());
 	
 	@GET
-	@Produces(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)	
 	@Consumes(MediaType.APPLICATION_JSON)
 	@ApiOperation(value = "Finds a Session by id", 
 	notes = "Finds a Session by id", 
@@ -200,23 +200,48 @@ public class PsySessionResource {
 	}
 	
 	@GET
-	@Path("/{treatment-data}/{clientId}")
+	@Path("/{treatment-data}/")
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
-	@ApiOperation(value = "Retrieve Treatment data for a client", 
-	notes = "Retrieve Treatment data for a client", 
-	response = TreatmentData.class)
+	@ApiOperation(value = "Retrieve list of Treatment data for a client", 
+	notes = "Retrieve list of Treatment data for a client", 
+	response = List.class)
 	public Response getTreatmentData(@ApiParam @QueryParam("clientId") String clientId) {
 		
 		try {
-			TreatmentData treatmentData = psySessionService.getTreatmentData(Integer.valueOf(clientId));
+			List<TreatmentData> treatmentData = psySessionService.getTreatmentData(Integer.valueOf(clientId));
 			if(treatmentData == null) {
-				ErrorResponse er = new ErrorResponse("422", "Could not retrieve Treatment data");
+				ErrorResponse er = new ErrorResponse("422", "No Treatment data is found for clientId " + clientId);
 				return Response.status(422).entity(er).build();
 			}
 			return Response.ok().entity(treatmentData).build();
 			
 		} catch (RuntimeException e) {
+			LOGGER.log(Level.SEVERE, e.getMessage());
+			ErrorResponse er = new ErrorResponse("422", "Could not retrieve Treatment data");
+			return Response.status(422).entity(er).build();
+		}
+	}
+	
+	@GET
+	@Path("/{treatment-data}/session/")
+	@Produces(MediaType.APPLICATION_JSON)
+	@Consumes(MediaType.APPLICATION_JSON)
+	@ApiOperation(value = "Retrieve Treatment data for a session", 
+	notes = "Retrieve Treatment data for a session", 
+	response = TreatmentData.class)
+	public Response getTreatmentDataForSession(@ApiParam @QueryParam("sessionId") String sessionId) {
+		
+		try {
+			TreatmentData treatmentData = psySessionService.getTreatmentDataForSession(Integer.valueOf(sessionId));
+			if(treatmentData == null) {
+				ErrorResponse er = new ErrorResponse("422", "No Treatment data is found for session " + sessionId);
+				return Response.status(422).entity(er).build();
+			}
+			return Response.ok().entity(treatmentData).build();
+			
+		} catch (RuntimeException e) {
+			LOGGER.log(Level.SEVERE, e.getMessage());
 			ErrorResponse er = new ErrorResponse("422", "Could not retrieve Treatment data");
 			return Response.status(422).entity(er).build();
 		}

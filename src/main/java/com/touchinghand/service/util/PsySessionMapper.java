@@ -117,7 +117,11 @@ public class PsySessionMapper {
 		return tde;
 	}
 	
-	public TreatmentData fromEntity(TreatmentDataEntity tde) {
+	public List<TreatmentData> fromTreatmentDataEntities(List<TreatmentDataEntity> tdes) {
+		return tdes.stream().map(this::fromTreatmentDataEntity).collect(Collectors.toList());
+	}
+	
+	public TreatmentData fromTreatmentDataEntity(TreatmentDataEntity tde) {
 		if(tde == null) return null;
 		
 		TreatmentData td = new TreatmentData();
@@ -126,7 +130,8 @@ public class PsySessionMapper {
 		td.setClientDocLink(tde.getClientDocLink());
 		td.setClientId(tde.getClientId().toString());
 		td.setCreatedOn(tde.getCreatedOn());
-		td.setDegree(tde.getDegree().toString());
+		if(tde.getDegree() != null)
+			td.setDegree(tde.getDegree().toString());
 		td.setDiagnosis(tde.getDiagnosis());
 		td.setDiffDiagnosis(tde.getDiffDiagnosis());
 		td.setDuration(tde.getDuration());
