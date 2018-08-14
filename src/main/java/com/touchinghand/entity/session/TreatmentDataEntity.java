@@ -10,6 +10,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
@@ -39,7 +40,7 @@ public class TreatmentDataEntity implements Serializable{
 	@JoinColumn(name="session_id", insertable=false, updatable=false)
 	private PsySessionEntity sessionEntity;
 	
-	@OneToOne(optional=true)
+	@ManyToOne(optional=true)
 	@JoinColumn(name="client_id", insertable=false, updatable=false)
 	private ClientEntity clientEntity;
 	

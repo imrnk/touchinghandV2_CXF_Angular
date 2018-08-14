@@ -16,6 +16,20 @@ public class PsySession implements Serializable{
 	
 	private Client client;
 	
+	private TreatmentData treatmentData;
+	
+	public TreatmentData getTreatmentData() {
+		return treatmentData;
+	}
+
+	public void setTreatmentData(TreatmentData treatmentData) {
+		this.treatmentData = treatmentData;
+	}
+
+	public void setClientId(Integer clientId) {
+		this.clientId = clientId;
+	}
+
 	private String sessionDate;
 	
 	private String followupDate;

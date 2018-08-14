@@ -40,6 +40,10 @@ public class PsySessionEntity implements Serializable{
 	@JoinColumn(name="client_id", insertable=false, updatable=false)
 	private ClientEntity clientEntity;
 	
+	@OneToOne(mappedBy="sessionEntity")
+	private TreatmentDataEntity treatmentDataEntity;
+	
+	
 	@Column(name="session_date")
 	private LocalDate sessionDate;
 	
@@ -114,6 +118,14 @@ public class PsySessionEntity implements Serializable{
 
 	public void setSessionRecordEntity(SessionRecordEntity sessionRecordEntity) {
 		this.sessionRecordEntity = sessionRecordEntity;
+	}
+
+	public TreatmentDataEntity getTreatmentDataEntity() {
+		return treatmentDataEntity;
+	}
+
+	public void setTreatmentDataEntity(TreatmentDataEntity treatmentDataEntity) {
+		this.treatmentDataEntity = treatmentDataEntity;
 	}
 
 	@Override

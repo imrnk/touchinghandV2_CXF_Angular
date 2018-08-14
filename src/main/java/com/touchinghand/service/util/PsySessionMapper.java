@@ -10,6 +10,7 @@ import org.springframework.stereotype.Component;
 
 import com.touchinghand.common.CommonUtils;
 import com.touchinghand.common.DateResolver;
+import com.touchinghand.dto.Client;
 import com.touchinghand.dto.PsySession;
 import com.touchinghand.dto.TreatmentData;
 import com.touchinghand.entity.session.PsySessionEntity;
@@ -24,9 +25,6 @@ public class PsySessionMapper {
 	
 	@Autowired
 	private CommonUtils utils;
-	
-	@Autowired
-	private ClientMapper clientMapper;
 	
 	
 	public List<PsySession> fromEntities(List<PsySessionEntity> pses){
@@ -43,11 +41,24 @@ public class PsySessionMapper {
 		dto.setImpression(pse.getSessionRecordEntity().getImpression());
 		dto.setFeedback(pse.getSessionRecordEntity().getFeedback());
 		dto.setFollowupDate(dateResolver.toStringDate(pse.getFollowupDate()));
+
+		dto.setClient(getClientLite(pse));
 		
-		dto.setClient(clientMapper.fromEntity(pse.getClientEntity()));
+		if(pse.getTreatmentDataEntity() != null) {
+			dto.setTreatmentData(fromTreatmentDataEntity(pse.getTreatmentDataEntity()));
+		}
 		
 		return dto;
 		
+	}
+	
+	private Client getClientLite(PsySessionEntity pse) {
+		Client client = new Client();
+		client.setClientId(pse.getClientId());
+		client.setFirstName(pse.getClientEntity().getFirstName());
+		client.setLastName(pse.getClientEntity().getLastName());
+		client.setClientName(utils.fullName(pse.getClientEntity().getFirstName(), pse.getClientEntity().getLastName()));
+		return client;
 	}
 	
 	public PsySessionEntity toEntity(PsySession ps) {
@@ -125,7 +136,7 @@ public class PsySessionMapper {
 		if(tde == null) return null;
 		
 		TreatmentData td = new TreatmentData();
-		
+		td.setTreatmentId(tde.getTreatmentId());
 		td.setCasehistory(tde.getCasehistory());
 		td.setClientDocLink(tde.getClientDocLink());
 		td.setClientId(tde.getClientId().toString());

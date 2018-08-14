@@ -152,7 +152,7 @@ public class PsySessionResource {
 	}
 	
 	@POST
-	@Path("/{treatment-data}")
+	@Path("/treatment-data")
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
 	@ApiOperation(value = "Create a Treatment data for a client", 
@@ -176,7 +176,7 @@ public class PsySessionResource {
 	}
 	
 	@PUT
-	@Path("/{treatment-data}/{treatmentId}")
+	@Path("/treatment-data/{treatmentId}")
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
 	@ApiOperation(value = "Update a Treatment data for a client", 
@@ -200,7 +200,7 @@ public class PsySessionResource {
 	}
 	
 	@GET
-	@Path("/{treatment-data}/")
+	@Path("/treatment-data/")
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
 	@ApiOperation(value = "Retrieve list of Treatment data for a client", 
@@ -224,7 +224,7 @@ public class PsySessionResource {
 	}
 	
 	@GET
-	@Path("/{treatment-data}/session/")
+	@Path("/treatment-data/session/")
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
 	@ApiOperation(value = "Retrieve Treatment data for a session", 

@@ -34,8 +34,8 @@ public class ClientEntity implements Serializable{
 	@OneToOne(mappedBy="clientEntity")
 	private ClientMseEntity clientMse;
 	
-	@OneToOne(mappedBy="clientEntity")
-	private TreatmentDataEntity treatmentDataEntity;
+	@OneToMany(mappedBy="clientEntity", fetch=FetchType.LAZY)
+	private List<TreatmentDataEntity> treatmentDataEntities;
 	
 	@OneToMany(mappedBy="clientEntity", fetch=FetchType.LAZY)
 	private List<PsySessionEntity> sessionEntities;
@@ -255,12 +255,24 @@ public class ClientEntity implements Serializable{
 		this.clientMse = clientMse;
 	}
 
-	public TreatmentDataEntity getTreatmentDataEntity() {
-		return treatmentDataEntity;
+	public List<TreatmentDataEntity> getTreatmentDataEntities() {
+		return treatmentDataEntities;
 	}
 
-	public void setTreatmentDataEntity(TreatmentDataEntity treatmentDataEntity) {
-		this.treatmentDataEntity = treatmentDataEntity;
+	public void setTreatmentDataEntities(List<TreatmentDataEntity> treatmentDataEntities) {
+		this.treatmentDataEntities = treatmentDataEntities;
+	}
+
+	public List<PsySessionEntity> getSessionEntities() {
+		return sessionEntities;
+	}
+
+	public void setSessionEntities(List<PsySessionEntity> sessionEntities) {
+		this.sessionEntities = sessionEntities;
+	}
+
+	public void setAge(int age) {
+		this.age = age;
 	}
 
 	@Override
@@ -320,18 +332,6 @@ public class ClientEntity implements Serializable{
 				+ state + ", pin=" + pin + ", country=" + country + ", mobile=" + mobile + ", secondPhone="
 				+ secondPhone + ", email=" + email + ", reference=" + reference + ", status=" + status
 				+ ", followupDate=" + followupDate + "]";
-	}
-
-	public List<PsySessionEntity> getSessionEntities() {
-		return sessionEntities;
-	}
-
-	public void setSessionEntities(List<PsySessionEntity> sessionEntities) {
-		this.sessionEntities = sessionEntities;
-	}
-
-	public void setAge(int age) {
-		this.age = age;
 	}
 	
 	
