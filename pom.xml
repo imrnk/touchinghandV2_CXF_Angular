@@ -17,6 +17,8 @@
 		<spring.framework>4.3.10.RELEASE</spring.framework>
 		<hibernate>5.2.12.Final</hibernate>
 		<mysql.connector>5.1.40</mysql.connector>
+		<jjwt.version>0.7.0</jjwt.version>
+		<jbcrypt.version>0.4.1</jbcrypt.version>
 	</properties>
 	<dependencies>
 		<dependency>
@@ -98,7 +100,19 @@
 			<version>${spring.framework}</version>
 			<scope>test</scope>
 		</dependency>
+		<!-- Authentication related -->
+		<dependency>
+            <groupId>io.jsonwebtoken</groupId>
+            <artifactId>jjwt</artifactId>
+            <version>${jjwt.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>de.svenkubiak</groupId>
+            <artifactId>jBCrypt</artifactId>
+            <version>${jbcrypt.version}</version>
+        </dependency>
 	</dependencies>
+	
 	<build>
 		<plugins>
 			<plugin>

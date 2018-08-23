@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import javax.annotation.security.RolesAllowed;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DefaultValue;
 import javax.ws.rs.GET;
@@ -25,15 +26,17 @@ import com.touchinghand.common.DateResolver;
 import com.touchinghand.common.ErrorResponse;
 import com.touchinghand.dto.Client;
 import com.touchinghand.dto.ClientMse;
+import com.touchinghand.security.EnforcedSecurity;
 import com.touchinghand.service.client.PsyClientService;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 
+
 @Path("/clients")
 @Api(value = "/clients", tags = "clients")
-public class ClientResource {
+public class ClientResource implements EnforcedSecurity{
 
 	@Autowired
 	private PsyClientService clientService;

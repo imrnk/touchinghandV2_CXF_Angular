@@ -15,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import com.touchinghand.common.ErrorResponse;
 import com.touchinghand.dto.GroupedReferenceData;
 import com.touchinghand.dto.ReferenceData;
+import com.touchinghand.security.EnforcedSecurity;
 import com.touchinghand.service.ReferenceDataService;
 
 import io.swagger.annotations.Api;
@@ -23,7 +24,7 @@ import io.swagger.annotations.ApiParam;
 
 @Path("/ref-data")
 @Api(value = "/ref-data", tags = "reference data")
-public class ReferenceResource {
+public class ReferenceResource implements EnforcedSecurity{
 	
 	@Autowired
 	private ReferenceDataService rdService;

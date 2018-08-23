@@ -15,7 +15,11 @@
 
 	<context:component-scan base-package="com.touchinghand" />
 	<context:annotation-config/>
+	<context:property-placeholder location="classpath:application_jwt.properties" />
 
+	
+	<bean id="authorizationFilter" class="com.touchinghand.security.api.filter.AuthorizationFilter" />
+	<bean id="authenticationFilter" class="com.touchinghand.security.api.filter.AuthenticationFilter" />
 	<bean id="jsonProvider" class="org.codehaus.jackson.jaxrs.JacksonJsonProvider" />
 	<bean id="multipartProvider" class="org.apache.cxf.jaxrs.provider.MultipartProvider" />
 	<bean id="swagger2Feature" class="org.apache.cxf.jaxrs.swagger.Swagger2Feature">
@@ -30,6 +34,8 @@
 		<jaxrs:providers>
 			<ref bean="jsonProvider" />
 			<ref bean="multipartProvider" />
+			<ref bean="authenticationFilter" />
+			<ref bean="authorizationFilter" />
 		</jaxrs:providers>
 		<jaxrs:features>
 			<ref bean="swagger2Feature" />

@@ -21,6 +21,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import com.touchinghand.common.ErrorResponse;
 import com.touchinghand.dto.PsySession;
 import com.touchinghand.dto.TreatmentData;
+import com.touchinghand.security.EnforcedSecurity;
 import com.touchinghand.service.session.PsySessionService;
 
 import io.swagger.annotations.Api;
@@ -29,7 +30,7 @@ import io.swagger.annotations.ApiParam;
 
 @Path("/psy-session")
 @Api(value = "/psy-session", tags = "psy session")
-public class PsySessionResource {
+public class PsySessionResource implements EnforcedSecurity{
 	
 	@Autowired
 	private PsySessionService psySessionService;
