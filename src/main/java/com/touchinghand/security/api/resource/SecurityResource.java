@@ -1,10 +1,10 @@
 package com.touchinghand.security.api.resource;
 
 import java.security.Principal;
-import java.util.ArrayList;
 import java.util.HashSet;
 
 import javax.annotation.security.PermitAll;
+import javax.annotation.security.RolesAllowed;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
@@ -17,20 +17,27 @@ import javax.ws.rs.core.SecurityContext;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
-import com.touchinghand.security.EnforcedSecurity;
 import com.touchinghand.security.Util;
 import com.touchinghand.security.api.AuthenticationTokenDetails;
 import com.touchinghand.security.api.TokenBasedSecurityContext;
 import com.touchinghand.security.api.model.AuthenticationToken;
 import com.touchinghand.security.api.model.QueryUserResult;
+import com.touchinghand.security.api.model.RegistrationUser;
 import com.touchinghand.security.api.model.UserCredentials;
+import com.touchinghand.security.domain.Authority;
 import com.touchinghand.security.entity.User;
 import com.touchinghand.security.service.AuthenticationTokenService;
 import com.touchinghand.security.service.UserService;
 import com.touchinghand.security.service.UsernamePasswordValidator;
 
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+
+//@EnforcedSecurity
+@RolesAllowed("ADMIN")
+@Api(value = "/auth", tags = "security")
 @Path("/auth")
-public class SecurityResource implements EnforcedSecurity{
+public class SecurityResource {
 	
 	@Context
     private SecurityContext securityContext;
@@ -45,6 +52,9 @@ public class SecurityResource implements EnforcedSecurity{
     private AuthenticationTokenService authenticationTokenService;
     
 
+    @ApiOperation(value = "Get Authenticated user", 
+    		notes = "Get Authenticated user", 
+    		response = QueryUserResult.class)
     @GET
     @Path("/me")
     @Produces(MediaType.APPLICATION_JSON)
@@ -75,6 +85,8 @@ public class SecurityResource implements EnforcedSecurity{
         QueryUserResult queryUserResult = new QueryUserResult();
         queryUserResult.setId(String.valueOf(user.getUserId()));
         queryUserResult.setUsername(user.getUsername());
+        queryUserResult.setFirstName(user.getFirstName());
+        queryUserResult.setLastName(user.getLastName());
         queryUserResult.setAuthorities(Util.fromRoles(user.getRoles()));
         queryUserResult.setActive(user.isActive());
         return queryUserResult;
@@ -86,6 +98,9 @@ public class SecurityResource implements EnforcedSecurity{
      * @param credentials
      * @return
      */
+    @ApiOperation(value = "Authenticate user", 
+    		notes = "Authenticate user", 
+    		response = AuthenticationToken.class)
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
@@ -104,6 +119,9 @@ public class SecurityResource implements EnforcedSecurity{
      *
      * @return
      */
+    @ApiOperation(value = "refresh auth token", 
+    		notes = "refresh auth token", 
+    		response = AuthenticationToken.class)
     @POST
     @Path("/refresh")
     @Produces(MediaType.APPLICATION_JSON)
@@ -118,5 +136,20 @@ public class SecurityResource implements EnforcedSecurity{
         return Response.ok(authenticationToken).build();
     }
 
+    @ApiOperation(value = "Register user", 
+    		notes = "Register user", 
+    		response = AuthenticationToken.class)
+    @POST
+    @Path("/register")
+    @PermitAll
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response register(RegistrationUser regUser) {
+    	
+    	User user = Util.fromModel(regUser, Authority.ADMIN);
+    	
+    	userService.registerUser(user);
+    	
+        return authenticate(Util.fromRegUser(regUser));
+    }
 
 }

@@ -26,17 +26,17 @@ import com.touchinghand.common.DateResolver;
 import com.touchinghand.common.ErrorResponse;
 import com.touchinghand.dto.Client;
 import com.touchinghand.dto.ClientMse;
-import com.touchinghand.security.EnforcedSecurity;
 import com.touchinghand.service.client.PsyClientService;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 
-
+//@EnforcedSecurity
+@RolesAllowed("ADMIN")
 @Path("/clients")
 @Api(value = "/clients", tags = "clients")
-public class ClientResource implements EnforcedSecurity{
+public class ClientResource{
 
 	@Autowired
 	private PsyClientService clientService;

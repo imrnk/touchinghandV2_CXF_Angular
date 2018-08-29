@@ -11,7 +11,7 @@
 		<java.version>1.8</java.version>
 		<javax.servlet-api>3.1.0</javax.servlet-api>
 		<javax.persistence.version>2.2</javax.persistence.version>
-		<frontend.jaxrs>3.1.14</frontend.jaxrs>
+		<cxf.version>3.2.6</cxf.version>
 		<swagger.ui>2.2.10-1</swagger.ui>
 		<jackson.jaxrs>1.9.13</jackson.jaxrs>
 		<spring.framework>4.3.10.RELEASE</spring.framework>
@@ -29,12 +29,17 @@
 		<dependency>
 			<groupId>org.apache.cxf</groupId>
 			<artifactId>cxf-rt-frontend-jaxrs</artifactId>
-			<version>${frontend.jaxrs}</version>
+			<version>${cxf.version}</version>
 		</dependency>
+		<dependency>
+        <groupId>org.apache.cxf</groupId>
+        <artifactId>cxf-rt-transports-http</artifactId>
+        <version>${cxf.version}</version>
+    </dependency>
 		<dependency>
 			<groupId>org.apache.cxf</groupId>
 			<artifactId>cxf-rt-rs-service-description-swagger</artifactId>
-			<version>${frontend.jaxrs}</version>
+			<version>${cxf.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.webjars</groupId>
@@ -132,6 +137,9 @@
 					<url>http://localhost:8090/manager/text</url>
 					<server>TomcatServer</server>
 					<path>/onlinecounselling</path>
+					<httpsPort>8443</httpsPort>
+        			<keystoreFile>/home/devuser/dev/onlinecounselling/ssl/tomcat.ks</keystoreFile>
+        			<keystorePass>3.14ispi</keystorePass>
 				</configuration>
 			</plugin>
 		</plugins>

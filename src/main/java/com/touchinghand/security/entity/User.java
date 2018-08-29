@@ -1,6 +1,7 @@
 package com.touchinghand.security.entity;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.Column;
@@ -30,16 +31,22 @@ public class User implements Serializable{
 	@Column(name="user_pass")
 	private String password;
 	
+	@Column(name="first_name")
+	private String firstName;
+	
+	@Column(name="last_name")
+	private String lastName;
+	
+
 	@Column(name="salt")
 	private String salt;
+	
+	@Column(name="active")
+	private Boolean active;
 	
 	@OneToMany(targetEntity=UserRole.class, fetch=FetchType.EAGER)
 	@JoinColumn()
 	private List<UserRole> roles;
-	
-	
-	@Column(name="active")
-	private Boolean active;
 	
 	
 	public Boolean isActive() {
@@ -56,6 +63,13 @@ public class User implements Serializable{
 
 	public void setRoles(List<UserRole> roles) {
 		this.roles = roles;
+	}
+	
+	public void addRole(UserRole role) {
+		if(this.roles == null) {
+			this.roles = new ArrayList<>();
+		}
+		this.roles.add(role);
 	}
 
 	public String getSalt() {
@@ -89,6 +103,20 @@ public class User implements Serializable{
 		this.password = password;
 	}
 	
-	
+	public String getFirstName() {
+		return firstName;
+	}
+
+	public void setFirstName(String firstName) {
+		this.firstName = firstName;
+	}
+
+	public String getLastName() {
+		return lastName;
+	}
+
+	public void setLastName(String lastName) {
+		this.lastName = lastName;
+	}
 	
 }

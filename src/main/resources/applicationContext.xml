@@ -17,7 +17,7 @@
 	<context:annotation-config/>
 	<context:property-placeholder location="classpath:application_jwt.properties" />
 
-	
+	<!-- <bean id="authorizationAnnotationFeature" class="com.touchinghand.security.api.filter.AuthorizationAnnotationCheckFeature" /> -->
 	<bean id="authorizationFilter" class="com.touchinghand.security.api.filter.AuthorizationFilter" />
 	<bean id="authenticationFilter" class="com.touchinghand.security.api.filter.AuthenticationFilter" />
 	<bean id="jsonProvider" class="org.codehaus.jackson.jaxrs.JacksonJsonProvider" />
@@ -30,6 +30,7 @@
 			<bean class="com.touchinghand.endpoint.client.ClientResource" />
 			<bean class="com.touchinghand.endpoint.ReferenceResource" />
 			<bean class="com.touchinghand.endpoint.session.PsySessionResource" />
+			<bean class="com.touchinghand.security.api.resource.SecurityResource" />
 		</jaxrs:serviceBeans>
 		<jaxrs:providers>
 			<ref bean="jsonProvider" />

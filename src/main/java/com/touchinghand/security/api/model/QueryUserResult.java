@@ -1,10 +1,8 @@
 package com.touchinghand.security.api.model;
 
-import java.util.List;
 import java.util.Set;
 
 import com.touchinghand.security.domain.Authority;
-import com.touchinghand.security.entity.UserRole;
 
 /**
  * API model for returning user details.

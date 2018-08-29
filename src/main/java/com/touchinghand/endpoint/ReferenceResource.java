@@ -2,6 +2,7 @@ package com.touchinghand.endpoint;
 
 import java.util.List;
 
+import javax.annotation.security.RolesAllowed;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
@@ -22,9 +23,11 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 
+//@EnforcedSecurity
+@RolesAllowed("ADMIN")
 @Path("/ref-data")
 @Api(value = "/ref-data", tags = "reference data")
-public class ReferenceResource implements EnforcedSecurity{
+public class ReferenceResource {
 	
 	@Autowired
 	private ReferenceDataService rdService;

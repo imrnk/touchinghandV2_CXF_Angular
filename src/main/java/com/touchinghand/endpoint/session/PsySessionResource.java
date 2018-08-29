@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import javax.annotation.security.RolesAllowed;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
@@ -28,9 +29,11 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 
+//@EnforcedSecurity
+@RolesAllowed("ADMIN")
 @Path("/psy-session")
 @Api(value = "/psy-session", tags = "psy session")
-public class PsySessionResource implements EnforcedSecurity{
+public class PsySessionResource {
 	
 	@Autowired
 	private PsySessionService psySessionService;

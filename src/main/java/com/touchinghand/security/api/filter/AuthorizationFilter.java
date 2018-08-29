@@ -10,10 +10,11 @@ import javax.annotation.security.RolesAllowed;
 import javax.ws.rs.Priorities;
 import javax.ws.rs.container.ContainerRequestContext;
 import javax.ws.rs.container.ContainerRequestFilter;
-import javax.ws.rs.container.PreMatching;
 import javax.ws.rs.container.ResourceInfo;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.ext.Provider;
+
+import org.springframework.web.context.annotation.ApplicationScope;
 
 import com.touchinghand.common.exception.AccessDeniedException;
 
@@ -21,14 +22,26 @@ import com.touchinghand.common.exception.AccessDeniedException;
  * Role authorization filter.
  *
  */
+//@Component
+@ApplicationScope
 @Provider
-@PreMatching
+//@PreMatching
 @Priority(Priorities.AUTHORIZATION)
 public class AuthorizationFilter implements ContainerRequestFilter {
-
-    @Context
+	
     private ResourceInfo resourceInfo;
-
+    
+    public AuthorizationFilter() {}
+    
+    public AuthorizationFilter(final ResourceInfo ri) {
+    	resourceInfo = ri;
+    }
+    
+    @Context
+    public void setResourceInfo(ResourceInfo resourceInfo) {
+        this.resourceInfo = resourceInfo;
+    }
+    
     @Override
     public void filter(final ContainerRequestContext requestContext) throws IOException {
 
