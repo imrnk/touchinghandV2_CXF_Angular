@@ -1,9 +1,10 @@
 package com.touchinghand.security.entity;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -13,6 +14,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+
 
 @Entity
 @Table(name="users")
@@ -41,12 +43,12 @@ public class User implements Serializable{
 	@Column(name="salt")
 	private String salt;
 	
-	@Column(name="active")
+	@Column(name="active", columnDefinition = "TINYINT(1)")
 	private Boolean active;
 	
-	@OneToMany(targetEntity=UserRole.class, fetch=FetchType.EAGER)
-	@JoinColumn()
-	private List<UserRole> roles;
+	@OneToMany(targetEntity=UserRole.class, fetch=FetchType.EAGER, cascade= CascadeType.ALL)
+	@JoinColumn(name="user_name", referencedColumnName="user_name")
+	private Set<UserRole> roles;
 	
 	
 	public Boolean isActive() {
@@ -57,17 +59,17 @@ public class User implements Serializable{
 		this.active = active;
 	}
 
-	public List<UserRole> getRoles() {
+	public Set<UserRole> getRoles() {
 		return roles;
 	}
 
-	public void setRoles(List<UserRole> roles) {
+	public void setRoles(Set<UserRole> roles) {
 		this.roles = roles;
 	}
 	
 	public void addRole(UserRole role) {
 		if(this.roles == null) {
-			this.roles = new ArrayList<>();
+			this.roles = new HashSet<>();
 		}
 		this.roles.add(role);
 	}

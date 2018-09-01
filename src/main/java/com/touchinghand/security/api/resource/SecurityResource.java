@@ -11,6 +11,7 @@ import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.Context;
+import javax.ws.rs.core.HttpHeaders;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.SecurityContext;
@@ -19,7 +20,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import com.touchinghand.security.Util;
 import com.touchinghand.security.api.AuthenticationTokenDetails;
-import com.touchinghand.security.api.TokenBasedSecurityContext;
 import com.touchinghand.security.api.model.AuthenticationToken;
 import com.touchinghand.security.api.model.QueryUserResult;
 import com.touchinghand.security.api.model.RegistrationUser;
@@ -70,7 +70,7 @@ public class SecurityResource {
             return Response.ok(queryUserResult).build();
         }
 
-        User user = userService.findUserByUserName(principal.getName()).get();
+        User user = userService.findUserByUserName(principal.getName());
         QueryUserResult queryUserResult = toQueryUserResult(user);
         return Response.ok(queryUserResult).build();
     }
@@ -83,12 +83,14 @@ public class SecurityResource {
      */
     private QueryUserResult toQueryUserResult(User user) {
         QueryUserResult queryUserResult = new QueryUserResult();
-        queryUserResult.setId(String.valueOf(user.getUserId()));
-        queryUserResult.setUsername(user.getUsername());
-        queryUserResult.setFirstName(user.getFirstName());
-        queryUserResult.setLastName(user.getLastName());
-        queryUserResult.setAuthorities(Util.fromRoles(user.getRoles()));
-        queryUserResult.setActive(user.isActive());
+        if(user != null) {
+	        queryUserResult.setId(String.valueOf(user.getUserId()));
+	        queryUserResult.setUsername(user.getUsername());
+	        queryUserResult.setFirstName(user.getFirstName());
+	        queryUserResult.setLastName(user.getLastName());
+	        queryUserResult.setAuthorities(Util.fromRoles(user.getRoles()));
+	        queryUserResult.setActive(user.isActive());
+        }
         return queryUserResult;
     }
 
@@ -122,17 +124,20 @@ public class SecurityResource {
     @ApiOperation(value = "refresh auth token", 
     		notes = "refresh auth token", 
     		response = AuthenticationToken.class)
-    @POST
+    @GET
     @Path("/refresh")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response refresh() {
-
-        AuthenticationTokenDetails tokenDetails =
-                ((TokenBasedSecurityContext) securityContext).getAuthenticationTokenDetails();
-        String token = authenticationTokenService.refreshToken(tokenDetails);
-
-        AuthenticationToken authenticationToken = new AuthenticationToken();
-        authenticationToken.setToken(token);
+    public Response refresh(@Context HttpHeaders header) {
+    	
+    	String authorizationHeader = header.getHeaderString(HttpHeaders.AUTHORIZATION);
+    	AuthenticationTokenDetails tokenDetails = null;
+    	AuthenticationToken authenticationToken = new AuthenticationToken();
+    	 if (authorizationHeader != null && authorizationHeader.startsWith("Bearer ")) {
+             String authToken = authorizationHeader.substring(7);
+             tokenDetails = authenticationTokenService.parseToken(authToken);
+             String token = authenticationTokenService.refreshToken(tokenDetails);
+             authenticationToken.setToken(token);
+    	 }
         return Response.ok(authenticationToken).build();
     }
 
@@ -142,12 +147,14 @@ public class SecurityResource {
     @POST
     @Path("/register")
     @PermitAll
+    @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     public Response register(RegistrationUser regUser) {
     	
     	User user = Util.fromModel(regUser, Authority.ADMIN);
     	
     	userService.registerUser(user);
+    	//user = userService.findUserByUserName(regUser.getUsername()).get();
     	
         return authenticate(Util.fromRegUser(regUser));
     }
