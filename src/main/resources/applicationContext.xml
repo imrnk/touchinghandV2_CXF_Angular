@@ -14,12 +14,21 @@
         http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.0.xsd">
 
 	<context:component-scan base-package="com.touchinghand" />
-	<context:annotation-config/>
+	<context:annotation-config />
 	<context:property-placeholder location="classpath:application_jwt.properties" />
 
-	<!-- <bean id="authorizationAnnotationFeature" class="com.touchinghand.security.api.filter.AuthorizationAnnotationCheckFeature" /> -->
-	<bean id="authorizationFilter" class="com.touchinghand.security.api.filter.AuthorizationFilter" />
-	<bean id="authenticationFilter" class="com.touchinghand.security.api.filter.AuthenticationFilter" />
+	<!-- <mvc:cors>
+		<mvc:mapping path="/**" allowed-origins="*"
+			allowed-methods="GET, PUT, POST, OPTION" 
+			allowed-headers="Content-Type,X-Requested-With,accept,Origin,Access-Control-Request-Method,Access-Control-Request-Headers"
+			exposed-headers="Access-Control-Allow-Origin,Access-Control-Allow-Credentials" 
+			allow-credentials="false" max-age="123" />		
+	</mvc:cors> -->
+	
+	<bean id="authorizationFilter"
+		class="com.touchinghand.security.api.filter.AuthorizationFilter" />
+	<bean id="authenticationFilter"
+		class="com.touchinghand.security.api.filter.AuthenticationFilter" />
 	<bean id="jsonProvider" class="org.codehaus.jackson.jaxrs.JacksonJsonProvider" />
 	<bean id="multipartProvider" class="org.apache.cxf.jaxrs.provider.MultipartProvider" />
 	<bean id="swagger2Feature" class="org.apache.cxf.jaxrs.swagger.Swagger2Feature">
@@ -53,9 +62,10 @@
 		factory-bean="entityManagerFactory" />
 
 	<bean id="transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager">
-        <property name="entityManagerFactory" ref="entityManagerFactory"/>
+		<property name="entityManagerFactory" ref="entityManagerFactory" />
 	</bean>
-	<bean class="org.springframework.orm.jpa.support.PersistenceAnnotationBeanPostProcessor" />
-	<tx:annotation-driven transaction-manager="transactionManager"/>
-			
+	<bean
+		class="org.springframework.orm.jpa.support.PersistenceAnnotationBeanPostProcessor" />
+	<tx:annotation-driven transaction-manager="transactionManager" />
+
 </beans>
