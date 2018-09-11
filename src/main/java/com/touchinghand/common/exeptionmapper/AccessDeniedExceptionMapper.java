@@ -21,7 +21,7 @@ public class AccessDeniedExceptionMapper implements ExceptionMapper<AccessDenied
     public Response toResponse(AccessDeniedException exception) {
 
         Status status = Status.FORBIDDEN;
-        ErrorResponse errorResponse = new ErrorResponse(status.name(), "You don't have enough permissions to perform this action.");
+        ErrorResponse errorResponse = new ErrorResponse(status.name(), exception.getMessage());
         return Response.status(status).entity(errorResponse).type(MediaType.APPLICATION_JSON).build();
     }
 }

@@ -17,16 +17,16 @@
 	<context:annotation-config />
 	<context:property-placeholder location="classpath:application_jwt.properties" />
 
-	<!-- <mvc:cors>
-		<mvc:mapping path="/**" allowed-origins="*"
-			allowed-methods="GET, PUT, POST, OPTION" 
-			allowed-headers="Content-Type,X-Requested-With,accept,Origin,Access-Control-Request-Method,Access-Control-Request-Headers"
-			exposed-headers="Access-Control-Allow-Origin,Access-Control-Allow-Credentials" 
-			allow-credentials="false" max-age="123" />		
-	</mvc:cors> -->
-	
 	<bean id="authorizationFilter"
 		class="com.touchinghand.security.api.filter.AuthorizationFilter" />
+	
+	<bean id="accessdeniedExceptionMapper"
+		class="com.touchinghand.common.exeptionmapper.AccessDeniedExceptionMapper" />
+	<bean id="authenticationExceptionMapper"
+		class="com.touchinghand.common.exeptionmapper.AuthenticationExceptionMapper" />
+	<bean id="authenticationtokenrefreshExceptionMapper"
+		class="com.touchinghand.common.exeptionmapper.AuthenticationTokenRefreshmentExceptionMapper" />		
+				
 	<bean id="authenticationFilter"
 		class="com.touchinghand.security.api.filter.AuthenticationFilter" />
 	<bean id="jsonProvider" class="org.codehaus.jackson.jaxrs.JacksonJsonProvider" />
@@ -46,6 +46,9 @@
 			<ref bean="multipartProvider" />
 			<ref bean="authenticationFilter" />
 			<ref bean="authorizationFilter" />
+			<ref bean="accessdeniedExceptionMapper" />
+			<ref bean="authenticationExceptionMapper" />
+			<ref bean="authenticationtokenrefreshExceptionMapper" />
 		</jaxrs:providers>
 		<jaxrs:features>
 			<ref bean="swagger2Feature" />

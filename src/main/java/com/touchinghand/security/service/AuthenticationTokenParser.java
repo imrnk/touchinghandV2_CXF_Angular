@@ -56,7 +56,7 @@ class AuthenticationTokenParser {
                     .withUsername(extractUsernameFromClaims(claims))
                     .withAuthorities(extractAuthoritiesFromClaims(claims))
                     .withIssuedDate(extractIssuedDateFromClaims(claims))
-                    .withExpirationDate(extractExpirationDateFromClaims(claims))
+                  //  .withExpirationDate(extractExpirationDateFromClaims(claims))
                     .withRefreshCount(extractRefreshCountFromClaims(claims))
                     .withRefreshLimit(extractRefreshLimitFromClaims(claims))
                     .build();
