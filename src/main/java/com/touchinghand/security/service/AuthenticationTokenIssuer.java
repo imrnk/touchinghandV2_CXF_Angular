@@ -34,7 +34,7 @@ class AuthenticationTokenIssuer {
                 .setAudience(settings.getAudience())
                 .setSubject(authenticationTokenDetails.getUsername())
                 .setIssuedAt(Date.from(authenticationTokenDetails.getIssuedDate().toInstant()))
-              //  .setExpiration(Date.from(authenticationTokenDetails.getExpirationDate().toInstant()))
+                .setExpiration(Date.from(authenticationTokenDetails.getExpirationDate().toInstant()))
                 .claim(settings.getAuthoritiesClaimName(), authenticationTokenDetails.getAuthorities())
                 .claim(settings.getRefreshCountClaimName(), authenticationTokenDetails.getRefreshCount())
                 .claim(settings.getRefreshLimitClaimName(), authenticationTokenDetails.getRefreshLimit())

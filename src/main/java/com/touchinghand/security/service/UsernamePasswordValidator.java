@@ -30,7 +30,7 @@ public class UsernamePasswordValidator {
         User user = userService.findUserByUserName(username);
         
         if( user == null) {
-        	throw new AuthenticationException("Bad credentials.");
+        	throw new AuthenticationException("No such user exists");
         }
         
 
@@ -41,7 +41,7 @@ public class UsernamePasswordValidator {
 
         if (!passwordEncoder.checkPassword(Util.decodeBase64(password), user.getPassword())) {
             // Invalid password
-            throw new AuthenticationException("Bad credentials.");
+            throw new AuthenticationException("Incorrect password");
         }
 
         return user;

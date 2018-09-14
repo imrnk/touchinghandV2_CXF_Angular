@@ -54,9 +54,6 @@ public class PsySession implements Serializable{
 		return clientId;
 	}
 
-	public void setClientId(int clientId) {
-		this.clientId = clientId;
-	}
 
 	public Client getClient() {
 		return client;
